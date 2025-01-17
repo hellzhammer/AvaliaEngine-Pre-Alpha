@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Engine_lib</id>
+    <version>1.0.0</version>
+    <authors>Engine_lib</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="KRONUSNEURAL" version="0.4.0.5" exclude="Build,Analyzers" />
+        <dependency id="MonoGame.Framework.DesktopGL" version="3.8.1.303" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\mattp\OneDrive\Desktop\KingsAndConquest\Engine_lib\bin\Debug\net6.0\Engine_lib.dll" target="lib\net6.0\Engine_lib.dll" />
+  </files>
+</package>
