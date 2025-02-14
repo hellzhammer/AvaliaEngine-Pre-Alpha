@@ -20,7 +20,15 @@ namespace Engine_lib.Map_Components
         {
             this.Is_Obstacle = is_obstacle;
             this.TileType = tiletype;
-            this.Is_Obstacle = false;
+            this.Is_Obstacle = is_obstacle;
+
+            this.Rect = new Rectangle(
+                this.Position.ToPoint(),
+                new Point(
+                    TextureManager.Texture_Dictionary[texture].Width,
+                    TextureManager.Texture_Dictionary[texture].Height
+                    )
+                );
         }
 
         public override void Update(GameTime gt)

@@ -1,23 +1,38 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
 namespace Engine_lib
 {
-	public class Camera2D
+    public class Camera2D
 	{
+        /// <summary>
+        /// main singleton instance
+        /// </summary>
         public static Camera2D main_camera { get; private set; }
 
         private Matrix CurrentViewMatrix { get; set; }
-		public bool Controlled = true;
+
+        /// <summary>
+        /// allows player to use camera stand alone.
+        /// </summary>
+		public bool Controlled = true;		
 		
-		
+        /// <summary>
+        /// the cameras viewport
+        /// </summary>
 		public readonly Viewport _viewport;
 
+        /// <summary>
+        /// the current position of the camera
+        /// </summary>
         public Vector2 Position { get; set; }
 
+        /// <summary>
+        /// the current zoom level
+        /// </summary>
         public float Zoom = 1.0f;
-        private Vector2 Origin { get; set; }
+
+        public Vector2 Origin { get; private set; }
 
         public Camera2D()
 		{
@@ -71,23 +86,35 @@ namespace Engine_lib
                 Matrix.CreateTranslation(new Vector3(Origin, 0.0f));
         }
 
+        /// <summary>
+        /// returns the current view matrix
+        /// </summary>
 		public Matrix GetViewMatrix()
 		{
 			return CurrentViewMatrix;
 		}
 
+        /// <summary>
+        /// gets the screen position in the worldspace
+        /// </summary>
 		public Vector2 ScreenToWorldSpace(Vector2 point)
 		{
 			Matrix invertedMatrix = Matrix.Invert(this.CurrentViewMatrix);
 			return Vector2.Transform(point, invertedMatrix);
 		}
 
+        /// <summary>
+        /// gets the screen position in the worldspace
+        /// </summary>
 		public static Vector2 ScreenToWorldSpace(Vector2 point, Matrix _viewport)
 		{
 			Matrix invertedMatrix = Matrix.Invert(_viewport);
 			return Vector2.Transform(point, invertedMatrix);
 		}
 
+        /// <summary>
+        /// checks if an object is within the cameras view
+        /// </summary>
         public static bool Is_In_Render_View_RectIntersectsCheck(Vector2 position)
         {
             var cam_pos = Camera2D.main_camera.Position;
@@ -97,6 +124,9 @@ namespace Engine_lib
             return camrect.Intersects(itemrect);
         }
 
+        /// <summary>
+        /// checks if an object is within the cameras view
+        /// </summary>
         public static bool Is_In_Render_View_RectIntersectsCheck(Vector2 position, int sizeX, int sizeY)
         {
             // Get the camera position
@@ -113,7 +143,9 @@ namespace Engine_lib
             return itemRect.Intersects(camRect);
         }
 
-
+        /// <summary>
+        /// checks if an object is within the cameras view
+        /// </summary>
         public static bool Is_In_Render_View_BoundsCheck(Vector2 position)
         {
             var cam_pos = Camera2D.main_camera.Position;
@@ -140,7 +172,6 @@ namespace Engine_lib
             return false;
         }
 
-        //DateTime next_update = DateTime.Now;
         public void Update()
 		{
             CurrentViewMatrix = this.Get_View_Matrix();

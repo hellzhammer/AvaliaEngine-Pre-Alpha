@@ -9,21 +9,20 @@ namespace Engine_lib.Map_Components
         /// chunks actual id
         /// </summary>
         public readonly string Chunk_ID;
-        private Vector2 Position { get; set; }
+        public Vector2 Position { get; set; }
 
         /// <summary>
         /// chunk max x
         /// </summary>
-        private int Size_X { get; set; }
+        public int Size_X { get; set; }
         /// <summary>
         /// chunk max y
         /// </summary>
-        private int Size_Y { get; set; }
+        public int Size_Y { get; set; }
 
         /// <summary>
         /// this chunks tiles
         /// </summary>
-        //public Tile[][] Chunk { get; private set; }
         public string[][] ChunkIDMap { get; set; }
 
         /// <summary>
@@ -33,6 +32,8 @@ namespace Engine_lib.Map_Components
 
         public List<string> ResourceIDList { get; set; }
 
+        public Rectangle Rect { get; set; }
+
         public MapChunk(string[][] chunk, string chunkID)
         {
             this.Chunk_ID = chunkID;
@@ -41,6 +42,10 @@ namespace Engine_lib.Map_Components
             this.Size_Y = 32 * chunk.Length; // vertical
 
             Position = WorldMap.TerrainTileDictionary[chunk[0][0]].Position;
+            Rect = new Rectangle(
+                                    Position.ToPoint(),
+                                    new Point(Size_X, Size_Y)
+                                    );
             Generate_Resources();
         }
 

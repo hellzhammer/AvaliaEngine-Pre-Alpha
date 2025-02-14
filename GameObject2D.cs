@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine_lib
 {
-    public class GameObject2D : GameObject
+    public class GameObject2D
 	{
 		/// <summary>
 		/// the objects texture name for streaming.
@@ -14,7 +14,7 @@ namespace Engine_lib
 		/// <summary>
 		/// the objects rect, for collision and render checks.
 		/// </summary>
-		protected Rectangle Rect { get; set; }
+		public Rectangle Rect { get; protected set; }
 
 		/// <summary>
 		/// where in the n*n space the object is drawn.
@@ -25,6 +25,21 @@ namespace Engine_lib
 		/// the objects world position.
 		/// </summary>
         public Vector2 Position { get; set; }
+
+        protected double next_update = 0;
+        public float scale { get; set; }
+        public bool is_mouse_over { get; protected set; }
+        public string id { get; protected set; }
+        public string object_name { get; set; }
+
+        public float rotation { get; set; }
+
+        public Action OnMouseOver { get; set; }
+        public Action OnMouseExit { get; set; }
+        public Action OnLeftClick { get; set; }
+        public Action OnRightClick { get; set; }
+
+        public bool In_Render_View { get; protected set; }
 
         public GameObject2D(string ID, string obj_name, string textureName, Vector2 position)
 		{
@@ -48,8 +63,13 @@ namespace Engine_lib
             if(In_Render_View)
                 Input._OnMouseOver(this);
         }
-		
-		public virtual void Draw(SpriteBatch batch) 
+
+        public void SetMouseOver(bool change)
+        {
+            this.is_mouse_over = change;
+        }
+
+        public virtual void Draw(SpriteBatch batch) 
 		{
 			if (In_Render_View)
 			{

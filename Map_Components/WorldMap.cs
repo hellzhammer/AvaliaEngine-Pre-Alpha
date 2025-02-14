@@ -10,7 +10,7 @@ namespace Engine_lib.Map_Components
         public static Dictionary<string, Tile> TerrainTileDictionary { get; protected set; }
         public static Dictionary<string, ResourceModel> ResourceTileDictionary { get; protected set; }
 
-        public MapChunk[][] World_Chunks { get; protected set; }
+        public static MapChunk[][] World_Chunks { get; protected set; }
         public string MapName { get; protected set; }
         public int MapWidth { get; protected set; }
         public int MapHeight { get; protected set; }
@@ -45,9 +45,9 @@ namespace Engine_lib.Map_Components
 
                 for (int j = 0; j < perlin_map[i].Length; j++)
                 {
-                    //Tile t = NextDesertTile(perlin_map[i][j], i, j);
+                    Tile t = NextDesertTile(perlin_map[i][j], i, j);
                     //Tile t = NextWinterTile(perlin_map[i][j], i, j); 
-                    Tile t = NextTemperateTile(perlin_map[i][j], i, j);
+                    //Tile t = NextTemperateTile(perlin_map[i][j], i, j);
 
                     if (t != null)
                     {

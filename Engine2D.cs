@@ -23,7 +23,7 @@ namespace Engine_lib
 			this.calendar = cs;
 		}
 
-        protected Engine2D(string game_id)
+        protected Engine2D()
 		{
 			this.GUI_MANAGER = new GUIManager(this);
 			// this is required to get keyboard info for text gui elements.
@@ -85,17 +85,6 @@ namespace Engine_lib
 		/// what happens when the scene changes.
 		/// </summary>
 		public static Action OnSceneClose { get; set; }
-
-		/// <summary>
-		/// run during LoadContent() in main Game1 class.
-		/// 
-		/// must override. no function provided in base class.
-		/// </summary>
-		/// <exception cref="Exception"></exception>
-		protected virtual void InitializeTextureStreaming()
-		{
-			throw new Exception("Not yet implemented!");
-		}
 
         protected override void Initialize()
         {
