@@ -17,11 +17,22 @@ public class GUIManager : GameComponent
 		current = this;
 	}
 	
+	float timer = 0.12f;
 	public override void Update(GameTime gt)
 	{
-		foreach (var widget in GUI)
+		if (timer <= 0)
 		{
-            widget.Value.Update(gt);
+            foreach (var widget in GUI)
+            {
+                widget.Value.Update(gt);
+            }
+
+			timer = 0.12f;
+			Debug.WriteLine("Updating!!!!");
+        }
+		else
+		{
+			timer -= (float)gt.ElapsedGameTime.TotalSeconds;
         }
 	}
 

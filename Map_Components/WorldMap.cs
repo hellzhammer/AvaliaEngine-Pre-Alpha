@@ -45,16 +45,17 @@ namespace Engine_lib.Map_Components
 
                 for (int j = 0; j < perlin_map[i].Length; j++)
                 {
-                    Tile t = NextDesertTile(perlin_map[i][j], i, j);
-                    //Tile t = NextWinterTile(perlin_map[i][j], i, j); 
-                    //Tile t = NextTemperateTile(perlin_map[i][j], i, j);
+                    var t = NextTemperateTile(perlin_map[i][j], i, j);
 
-                    if (t != null)
+                    if (t.tile != null)
                     {
                         // add tile data to the dictionary
-                        TerrainTileDictionary.Add(t.object_name, t);
+                        TerrainTileDictionary.Add(t.tile.object_name, t.tile);
                         // store tile id reference for later use.
-                        world_id_map[i][j] = t.object_name;
+                        world_id_map[i][j] = t.tile.object_name;
+
+                        // once the perlin value is used we can simply overwrite in order to save compute/memory.
+                        perlin_map[i][j] = t.tile_weight; // set the weight for pathfinding.
                     }
                     else
                     {
@@ -66,9 +67,10 @@ namespace Engine_lib.Map_Components
             return world_id_map; //world;
         }
 
-        protected Tile NextTemperateTile(int val, int i, int j)
+        protected (Tile tile, int tile_weight) NextTemperateTile(int val, int i, int j)
         {
             Tile t = null;
+            int tile_weight = 0; // can walk
             // this section builds the starting regions for the various races of the world. races towns may only be spawned in these regions. 
             // dungeons and POI's will be auto generated immediately for exploration and looting purposes.
             // the sand does not generate resources at this time. that could change?
@@ -85,36 +87,20 @@ namespace Engine_lib.Map_Components
             else if (val == 2)
             {
                 t = new Tile("Water", 0, "Tile-" + j + "-" + i, "Water", new Vector2(j * 32, i * 32), true);
-            }
-            else if (val == 3)
-            {
-                t = new Tile("Water", 0, "Tile-" + j + "-" + i, "Water", new Vector2(j * 32, i * 32), true);
-            }
-            else if (val == 4)
-            {
-                t = new Tile("Water", 0, "Tile-" + j + "-" + i, "Water", new Vector2(j * 32, i * 32), true);
+                tile_weight = 1; // cannot walk;
             }
 
             // build the main landscape. - the regions the various races tribes will eventually expand into.
             // no towns or dungeons will be auto spawned. they are going to be generated as the game progresses. 
-
             // this is the main terrain. simple grassy fields with scattered resources.
-            else if (val == 5)
+            else if (val == 3 || val == 4 || val == 5)
             {
                 t = new Tile("Sand", 1, "Tile-" + j + "-" + i, "Sand", new Vector2(j * 32, i * 32), false);
-            }
-            else if (val == 6)
-            {
-                t = new Tile("Grass", 3, "Tile-" + j + "-" + i, "Grass", new Vector2(j * 32, i * 32), false);
             }
 
             // create the denser forested areas. these areas will have more wood and food, but be harder to traverse and more dangerous.
             // these areas are less travelled by any cerature. staying rich and reserved for generations.
-            else if (val == 7)
-            {
-                t = new Tile("Grass", 3, "Tile-" + j + "-" + i, "Grass", new Vector2(j * 32, i * 32), false);
-            }
-            else if (val == 8)
+            else if (val == 6 || val == 7 || val == 8)
             {
                 t = new Tile("Grass", 3, "Tile-" + j + "-" + i, "Grass", new Vector2(j * 32, i * 32), false);
             }
@@ -127,9 +113,10 @@ namespace Engine_lib.Map_Components
             else
             {
                 t = new Tile("Mountain", 4, "Tile-" + j + "-" + i, "Mountain", new Vector2(j * 32, i * 32), true);
+                tile_weight = 1; // cannot walk;
             }
 
-            return t;
+            return (tile: t, tile_weight: tile_weight);
         }
 
         protected Tile NextWinterTile(int val, int i, int j)
@@ -323,6 +310,45 @@ namespace Engine_lib.Map_Components
                 }
             }
             return chunks;
+        }
+
+        /// <summary>
+        /// Gets a tile around a given position. if rectagles intersect.
+        /// 
+        /// returns null if no tile found.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public static Tile GetTileAround(Vector2 pos)
+        {
+            Tile rtn = null;
+
+            MapChunk ch = null;
+            var pos_rect = new Rectangle(pos.ToPoint(), new Point(8, 8));
+            for (int i = 0; i < World_Chunks.Length; i++)
+            {
+                for (int j = 0; j < World_Chunks[i].Length; j++)
+                {
+                    var chunk_rect = World_Chunks[i][j].Rect;
+                    if (chunk_rect.Intersects(pos_rect))
+                    {
+                        ch = World_Chunks[i][j];
+                        break;
+                    }
+                }
+
+                if (ch != null)
+                    break;
+            }
+
+            if (ch == null)
+                return null;
+
+            var item = ch.TileAround(pos);
+            if (item != null)
+                rtn = item;
+
+            return rtn;
         }
     }
 }

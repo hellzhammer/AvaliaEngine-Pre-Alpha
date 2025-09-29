@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Engine_lib
 {
@@ -15,7 +16,7 @@ namespace Engine_lib
         /// <summary>
         /// allows player to use camera stand alone.
         /// </summary>
-		public bool Controlled = true;		
+		public bool Controlled = false;		
 		
         /// <summary>
         /// the cameras viewport
@@ -97,20 +98,12 @@ namespace Engine_lib
         /// <summary>
         /// gets the screen position in the worldspace
         /// </summary>
-		public Vector2 ScreenToWorldSpace(Vector2 point)
-		{
-			Matrix invertedMatrix = Matrix.Invert(this.CurrentViewMatrix);
-			return Vector2.Transform(point, invertedMatrix);
-		}
-
-        /// <summary>
-        /// gets the screen position in the worldspace
-        /// </summary>
-		public static Vector2 ScreenToWorldSpace(Vector2 point, Matrix _viewport)
-		{
-			Matrix invertedMatrix = Matrix.Invert(_viewport);
-			return Vector2.Transform(point, invertedMatrix);
-		}
+		public static Vector2 ScreenToWorldSpace(Vector2 screenPosition, Matrix cameraTransform)
+        {
+            // Invert the camera transform to go from screen -> world
+            Matrix inverse = Matrix.Invert(cameraTransform);
+            return Vector2.Transform(screenPosition, inverse);
+        }
 
         /// <summary>
         /// checks if an object is within the cameras view
@@ -172,9 +165,33 @@ namespace Engine_lib
             return false;
         }
 
+        public float cam_speed = 10;
         public void Update()
 		{
             CurrentViewMatrix = this.Get_View_Matrix();
+
+            if (this.Controlled)
+            {
+                var cspeed = cam_speed;
+                Vector2 move_to = Position;
+                // movement
+                if (Input.KeyHold(Keys.LeftShift))
+                {
+                    cspeed *= 2;
+                }
+                if (Input.KeyHold(Keys.Up) || Input.KeyHold(Keys.W))
+                    move_to.Y -= cspeed;
+
+                else if (Input.KeyHold(Keys.Down) || Input.KeyHold(Keys.S))
+                    move_to.Y += cspeed;
+
+                if (Input.KeyHold(Keys.Left) || Input.KeyHold(Keys.A))
+                    move_to.X -= cspeed;
+
+                else if (Input.KeyHold(Keys.Right) || Input.KeyHold(Keys.D))
+                    move_to.X += cspeed;
+                this.Position = move_to;
+            }
         }
 	}
 }

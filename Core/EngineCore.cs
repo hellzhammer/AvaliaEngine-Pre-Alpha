@@ -1,26 +1,70 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Runtime.CompilerServices;
 
 namespace Engine_lib.Core
 {
     public class EngineCore : Game
     {
         public static Random random { get; set; }
-        public TextureManager Texture_Manager { get; protected set; }
+
+        protected SpriteBatch spriteBatch { get; set; }
         public static GraphicsDeviceManager graphics { get; protected set; }
 
-        public void RemoveComponent(GameComponent toremove)
+        public virtual void RemoveComponent(GameComponent toremove)
         {
+            if (!Engine2D.current.Components.Contains(toremove))
+                return;
+
             this.Components.Remove(toremove);
             toremove.Dispose();
         }
 
-        public void RemoveComponent(DrawableGameComponent toremove)
+        public virtual void RemoveComponent(DrawableGameComponent toremove)
         {
+            if (!Engine2D.current.Components.Contains(toremove))
+                return;
+
             this.Components.Remove(toremove);
             toremove.Dispose();
         }
 
+        public static bool RemoveGameComponent(GameComponent toremove)
+        {
+            bool rtn = false;
+
+            if (!Engine2D.current.Components.Contains(toremove))
+                return false;
+
+            Engine2D.current.Components.Remove(toremove);
+            rtn = Engine2D.current.Components.Contains(toremove);
+            toremove.Dispose();
+
+            return rtn;
+        }
+
+        public static bool RemoveDrawableGameComponent(DrawableGameComponent toremove)
+        {
+            bool rtn = false;
+
+            if (!Engine2D.current.Components.Contains(toremove))
+                return false;
+
+            Engine2D.current.Components.Remove(toremove);
+            rtn = Engine2D.current.Components.Contains(toremove);
+            toremove.Dispose();
+
+            return rtn;
+        }
+
+        /// <summary>
+        /// draws a primitive square
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="paint"></param>
+        /// <returns></returns>
         public static Texture2D CreateSquare(GraphicsDevice device, int width, int height, Func<int, Color> paint)
         {
             Texture2D texture = new Texture2D(device, width, height);
@@ -35,6 +79,14 @@ namespace Engine_lib.Core
             return texture;
         }
 
+        /// <summary>
+        /// draws a primitive square with outline
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="paint"></param>
+        /// <returns></returns>
         public static Texture2D CreateOutlinedSquare(GraphicsDevice device, int width, int height, Func<int, Color> paint)
         {
             int dist = 10;
@@ -62,7 +114,14 @@ namespace Engine_lib.Core
             return texture;
         }
 
-        // Function to draw a line between two points
+        /// <summary>
+        /// draws lines between 2 points. global.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="color"></param>
+        /// <param name="thickness"></param>
+        /// <param name="sprite"></param>
         public static void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, SpriteBatch sprite)
         {
             // Calculate the distance and angle between the points
@@ -83,6 +142,15 @@ namespace Engine_lib.Core
             );
         }
 
+        /// <summary>
+        /// draws a primitive circle.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <param name="segments"></param>
+        /// <param name="color"></param>
+        /// <param name="thickness"></param>
         public static void DrawCircle(SpriteBatch spriteBatch, Vector2 center, float radius, int segments, Color color, float thickness)
         {
             float angleStep = MathHelper.TwoPi / segments;
@@ -108,6 +176,15 @@ namespace Engine_lib.Core
             }
         }
 
+        /// <summary>
+        /// uses rendering engine to draw a line from point a to b;
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="texture"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="color"></param>
+        /// <param name="thickness"></param>
         public static void DrawLine(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 end, Color color, float thickness)
         {
             Vector2 edge = end - start;
@@ -126,6 +203,15 @@ namespace Engine_lib.Core
             );
         }
 
+        /// <summary>
+        /// draws a primitive circle.
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="radius"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="paint"></param>
+        /// <returns></returns>
         public static Texture2D CreateCircle(GraphicsDevice device, float radius, int width, int height, Color paint)
         {
             Texture2D texture = new Texture2D(device, width, height);

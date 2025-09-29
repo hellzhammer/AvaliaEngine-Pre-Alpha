@@ -190,6 +190,30 @@ namespace Engine_lib.Map_Components
         }
 
         /// <summary>
+        /// check if a tile exists in this chunk.
+        /// </summary>
+        public Tile TileAround(Vector2 coords)
+        {
+            Tile found = null;
+            Rectangle coords_rect = new Rectangle(new Vector2(coords.X + 16, coords.Y + 16).ToPoint(), new Point(2, 2));
+            for (int i = 0; i < ChunkIDMap.Length; i++)
+            {
+                for (int j = 0; j < ChunkIDMap[0].Length; j++)
+                {
+                    if (WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Rect.Intersects(coords_rect))
+                    {
+                        found = WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]];
+                        break;
+                    }
+                }
+                if (found != null)
+                    break;
+            }
+
+            return found;
+        }
+
+        /// <summary>
         /// returns a single tile based on a position from the game world.
         /// </summary>
         public Tile GetTile(Vector2 tile)

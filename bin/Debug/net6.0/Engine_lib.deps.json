@@ -8,9 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "Engine_lib/1.0.0": {
         "dependencies": {
-          "KRONUSNEURAL": "0.4.0.5",
-          "MonoGame.Framework.DesktopGL": "3.8.1.303",
-          "Kronus_Neural": "0.4.0.5"
+          "MonoGame.Framework.DesktopGL": "3.8.1.303"
         },
         "runtime": {
           "Engine_lib.dll": {}
@@ -65,19 +63,6 @@
             "fileVersion": "0.0.0.0"
           }
         }
-      },
-      "KRONUSNEURAL/0.4.0.5": {
-        "runtime": {
-          "Kronus_Neural.dll": {}
-        }
-      },
-      "Kronus_Neural/0.4.0.5": {
-        "runtime": {
-          "Kronus_Neural.dll": {
-            "assemblyVersion": "0.4.0.5",
-            "fileVersion": "0.4.0.5"
-          }
-        }
       }
     }
   },
@@ -93,16 +78,6 @@
       "sha512": "sha512-eGYhqn0n1olk8MNYeE9EuBmoNNECN1T18rPMaQpkzsEQ0H3nVyFPXC+uCo78v5pi5juQpJ3PSFnSkjzZJ1U58A==",
       "path": "monogame.framework.desktopgl/3.8.1.303",
       "hashPath": "monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
-    },
-    "KRONUSNEURAL/0.4.0.5": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Kronus_Neural/0.4.0.5": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

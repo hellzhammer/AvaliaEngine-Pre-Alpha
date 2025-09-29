@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bHtxSQxWS9gsohglZhfBptTgyzznDzv0ZMgEfXuIoF0cKZwMDcaZKKn4bfocakg79wmnItAm+mHNiPha66VR9w==",
+  "dgSpecHash": "FQjTSbOtyGc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mattp\\OneDrive\\Desktop\\KingsAndConquest\\Engine_lib\\Engine_lib.csproj",
+  "projectFilePath": "C:\\Users\\mattp\\OneDrive\\Desktop\\Engine\\Engine_lib\\Engine_lib.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mattp\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
   ],

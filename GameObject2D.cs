@@ -24,7 +24,7 @@ namespace Engine_lib
 		/// <summary>
 		/// the objects world position.
 		/// </summary>
-        public Vector2 Position { get; set; }
+		public Vector2 Position;
 
         protected double next_update = 0;
         public float scale { get; set; }
@@ -43,17 +43,23 @@ namespace Engine_lib
 
         public GameObject2D(string ID, string obj_name, string textureName, Vector2 position)
 		{
-			this.texture_name = textureName;
+			if(Engine2D.random == null)
+				Engine2D.random = new Random();
+			this.next_update = Engine2D.random.Next(1, 5) * 0.0667;
 
-			this.rotation = 0;
-			this.scale = 1;
-			this.next_update = new Random().Next(1, 5) * 0.0667;
-			this.In_Render_View = false;
+            this.id = ID;
+            this.object_name = obj_name;
+            this.texture_name = textureName;
+            this.rotation = 0;
+            this.scale = 1;
+            this.In_Render_View = false;
 			this.is_mouse_over = false;
-			this.id = ID;
-			this.object_name = obj_name;
+			
 			this.Position = position;
-			this.Origin = new Vector2(32, 32);
+			if (!string.IsNullOrEmpty(textureName))
+			{
+                this.Origin = new Vector2(TextureManager.Texture_Dictionary[textureName].Height/2, TextureManager.Texture_Dictionary[textureName].Width/2);
+            }
 		}
 
 		public virtual void Update(GameTime gt) 
@@ -73,7 +79,17 @@ namespace Engine_lib
 		{
 			if (In_Render_View)
 			{
-				batch.Draw(TextureManager.Texture_Dictionary[this.texture_name], Position, null, Color.White, rotation, /*new Vector2(16, 16)*/ Vector2.Zero, scale, SpriteEffects.None, 1);
+				batch.Draw(
+					TextureManager.Texture_Dictionary[this.texture_name], 
+					Position, 
+					null, 
+					Color.White, 
+					rotation, 
+					this.Origin, 
+					scale, 
+					SpriteEffects.None, 
+					1
+					);
             }
 		}
 	}

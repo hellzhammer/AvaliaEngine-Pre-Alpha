@@ -47,16 +47,6 @@
             "rid": "win-x86"
           }
         }
-      },
-      "KRONUSNEURAL/0.4.0.5": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
-        "compile": {
-          "bin/placeholder/KRONUSNEURAL.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/KRONUSNEURAL.dll": {}
-        }
       }
     }
   },
@@ -82,42 +72,33 @@
         "runtimes/win-x86/native/SDL2.dll",
         "runtimes/win-x86/native/soft_oal.dll"
       ]
-    },
-    "KRONUSNEURAL/0.4.0.5": {
-      "type": "project",
-      "path": "../Kronus_Neural/Kronus_Neural.csproj",
-      "msbuildProject": "../Kronus_Neural/Kronus_Neural.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "KRONUSNEURAL >= 0.4.0.5",
       "MonoGame.Framework.DesktopGL >= 3.8.1.303"
     ]
   },
   "packageFolders": {
     "C:\\Users\\mattp\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mattp\\OneDrive\\Desktop\\KingsAndConquest\\Engine_lib\\Engine_lib.csproj",
+      "projectUniqueName": "C:\\Users\\mattp\\OneDrive\\Desktop\\Engine\\Engine_lib\\Engine_lib.csproj",
       "projectName": "Engine_lib",
-      "projectPath": "C:\\Users\\mattp\\OneDrive\\Desktop\\KingsAndConquest\\Engine_lib\\Engine_lib.csproj",
+      "projectPath": "C:\\Users\\mattp\\OneDrive\\Desktop\\Engine\\Engine_lib\\Engine_lib.csproj",
       "packagesPath": "C:\\Users\\mattp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mattp\\OneDrive\\Desktop\\KingsAndConquest\\Engine_lib\\obj\\",
+      "outputPath": "C:\\Users\\mattp\\OneDrive\\Desktop\\Engine\\Engine_lib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\mattp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -130,18 +111,20 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "C:\\Users\\mattp\\OneDrive\\Desktop\\KingsAndConquest\\Kronus_Neural\\Kronus_Neural.csproj": {
-              "projectPath": "C:\\Users\\mattp\\OneDrive\\Desktop\\KingsAndConquest\\Kronus_Neural\\Kronus_Neural.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net6.0": {
@@ -168,7 +151,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305\\RuntimeIdentifierGraph.json"
       }
     }
   }

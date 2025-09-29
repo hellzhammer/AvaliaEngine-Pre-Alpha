@@ -8,23 +8,18 @@ using System.Text.RegularExpressions;
 namespace Engine_lib
 {
 	public class Engine2D : EngineCore
-	{
-		protected static SceneModel currentScene { get; set; }
+	{		
         public static Engine2D current { get; private set; }
 
-		public static SpriteFont Game_Font { get; set; }
+        public TextureManager textureManager { get; protected set; }
+        public static SpriteFont Game_Font { get; set; }
 		protected GUIManager GUI_MANAGER { get; set; }
-		protected Camera2D camera { get; set; }
-		protected SpriteBatch spriteBatch { get; set; }
-		protected CalendarSystem calendar { get; set; }
 
-		public void SetCalendar(CalendarSystem cs)
-		{
-			this.calendar = cs;
-		}
+		protected Camera2D camera { get; set; }	
 
         protected Engine2D()
 		{
+			random = new Random();
 			this.GUI_MANAGER = new GUIManager(this);
 			// this is required to get keyboard info for text gui elements.
 			this.Window.TextInput += (s, a) => {
@@ -66,6 +61,31 @@ namespace Engine_lib
 			current = this;
 		}
 
+        protected override void Initialize()
+        {
+            Game_Font = Content.Load<SpriteFont>("Game_Font");
+
+            base.Initialize();
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            Input.Update();
+
+            if (camera != null)
+            {
+                Camera2D.main_camera.Update();
+            }
+        }
+
+        // ---- SCENE MANAGER -------------------
+        /// <summary>
+        /// what happens when the scene changes.
+        /// </summary>
+        public static Action OnSceneClose { get; set; }
+
+        protected static SceneModel currentScene { get; set; }
+
         /// <summary>
         /// update the current scene
         /// </summary>
@@ -79,31 +99,6 @@ namespace Engine_lib
 
             currentScene = null;
             currentScene = newscene;
-        }
-
-		/// <summary>
-		/// what happens when the scene changes.
-		/// </summary>
-		public static Action OnSceneClose { get; set; }
-
-        protected override void Initialize()
-        {
-			Game_Font = Content.Load<SpriteFont>("Game_Font");
-
-			base.Initialize();
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            Input.Update();
-			if (calendar != null)
-			{
-				calendar.Update(gameTime);
-			}
-            if (camera != null)
-            {
-                Camera2D.main_camera.Update();
-            }
         }
     }
 }

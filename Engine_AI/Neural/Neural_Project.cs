@@ -1,4 +1,4 @@
-﻿using Kronus_Neural.Activations;
+﻿/*using Kronus_Neural.Activations;
 using Kronus_Neural.NEAT;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -122,3 +122,4 @@ namespace Engine_lib.Engine_AI.Neural
         }
     }
 }
+*/

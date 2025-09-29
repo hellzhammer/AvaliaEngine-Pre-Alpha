@@ -12,7 +12,7 @@ namespace Engine_lib.Engine_AI
         protected Vector2 Combat_Order_Target { get; set; }
         protected Vector2 direction = Vector2.Zero;
         protected float speed = 60;
-        protected float stop_distance = 0.2f;
+        protected float stop_distance = 32f;
         protected List<Vector2> waypoints = null;
 
         public AgentModel2D(string ID, string obj_name, string texture, Vector2 position) : base(ID, obj_name, texture, position)
@@ -23,12 +23,12 @@ namespace Engine_lib.Engine_AI
         /// <summary>
         /// Uses pathfinding to get to specified destination. Requires the map instance in order to work properly. 
         /// </summary>
-        public void SetDestination(Vector2 target, Tile[][] world_map)
+        public void SetDestinationPathing(Vector2 target)
         {
             waypoints = null;
             Movement_Order_Target = target;
 
-            PathBuilder(world_map);
+            PathBuilder();
         }
 
         /// <summary>
@@ -82,13 +82,6 @@ namespace Engine_lib.Engine_AI
 
         public override void Draw(SpriteBatch batch)
         {
-            /*if (waypoints != null)
-            {
-                for (int p = 0; p < waypoints.Count; p++)
-                {
-                    batch.Draw(this.object_sprite, waypoints[p], Color.White);
-                }
-            }*/
             base.Draw(batch);
         }
 
@@ -127,152 +120,107 @@ namespace Engine_lib.Engine_AI
             base.Update(gt);
         }
 
-        /// <summary>
-        /// this is a test function, change back to pathbuilder3 if this does not pan out. 
-        /// 
-        /// this function does not allow characters to stop or move within 1 tile of an obstacle.
-        /// </summary>
-        protected void PathBuilder(Tile[][] world_map)
+        protected void PathBuilder()
         {
-            bool found = false;
-            Vector2 start = Vector2.Zero;
             Vector2 end = Movement_Order_Target;
 
-            // Check if the target is an obstacle
-            try
+            // Check if target is blocked
+            var targetTile = WorldMap.GetTileAround(end);
+            if (targetTile == null || targetTile.Is_Obstacle || IsAdjacentToObstacle(end))
+                return;
+
+            var ti = WorldMap.GetTileAround(this.Position);
+            if (ti == null)
+                return;
+
+            Vector2 start = ti.Position;
+
+            var openSet = new SortedSet<(float fScore, Vector2 pos)>(
+                Comparer<(float fScore, Vector2 pos)>.Create((a, b) =>
+                {
+                    int cmp = a.Item1.CompareTo(b.Item1); // fScore
+                    if (cmp != 0) return cmp;
+                    return a.Item2.GetHashCode().CompareTo(b.Item2.GetHashCode());
+                }));
+
+            var cameFrom = new Dictionary<Vector2, Vector2>();
+            var gScore = new Dictionary<Vector2, float> { [start] = 0 };
+            var fScore = new Dictionary<Vector2, float> { [start] = Heuristic(start, end) };
+
+            var openSetLookup = new HashSet<Vector2> { start };
+            openSet.Add((fScore[start], start));
+
+            int failCounter = 0;
+            int failLimit = 5000; // tweak depending on map size / performance
+
+            while (openSet.Count > 0)
             {
-                if (world_map[(int)Movement_Order_Target.Y / 32][(int)Movement_Order_Target.X / 32].Is_Obstacle)
+                // Early bail-out if too many attempts
+                failCounter++;
+                if (failCounter > failLimit)
+                {
+                    Debug.WriteLine("Pathfinding aborted: too many iterations.");
                     return;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-                return;
-            }
+                }
 
-            // Find the starting tile
-            for (int i = 0; i < world_map.Length; i++)
-            {
-                for (int j = 0; j < world_map[i].Length; j++)
+                // Get lowest fScore node
+                var current = openSet.Min.pos;
+                openSet.Remove(openSet.Min);
+                openSetLookup.Remove(current);
+
+                // Goal check
+                if (Vector2.Distance(current, end) < stop_distance)
                 {
-                    var tile = world_map[i][j];
-                    if (!tile.Is_Obstacle)
-                    {
-                        this.Rect = new Rectangle(this.Position.ToPoint(), new Point(1, 1));
-                        Rectangle tileRect = new Rectangle(new Vector2(tile.Position.X + 16, tile.Position.Y + 16).ToPoint(), new Point(32, 32));
+                    var path = ReconstructPath(cameFrom, current);
+                    path.Insert(0, this.Position); // start with actual position
+                    waypoints = path;
+                    return;
+                }
 
-                        if (this.Rect.Intersects(tileRect))
+                // Neighbors
+                foreach (var neighbor in GetNeighbors(current))
+                {
+                    var tile = WorldMap.GetTileAround(neighbor);
+                    if (tile == null || tile.Is_Obstacle || IsAdjacentToObstacle(neighbor))
+                        continue;
+
+                    float tentativeG = gScore[current] + 32; // cost per step
+
+                    if (!gScore.ContainsKey(neighbor) || tentativeG < gScore[neighbor])
+                    {
+                        cameFrom[neighbor] = current;
+                        gScore[neighbor] = tentativeG;
+                        fScore[neighbor] = tentativeG + Heuristic(neighbor, end);
+
+                        if (!openSetLookup.Contains(neighbor))
                         {
-                            start = tile.Position;
-                            found = true;
-                            break;
+                            openSet.Add((fScore[neighbor], neighbor));
+                            openSetLookup.Add(neighbor);
                         }
                     }
                 }
-                if (found)
-                {
-                    break;
-                }
             }
 
-            // If starting tile not found, exit early
-            if (!found)
-                return;
+            Debug.WriteLine("Pathfinding failed to find a path.");
+        }
 
-            List<Vector2> been_to = new List<Vector2>();
-            List<Vector2> path = new List<Vector2> { start };
 
-            int fails = 0;
-            bool complete = false;
-            float epsilon = 0.1f; // Tolerance for floating-point comparison
+        private float Heuristic(Vector2 a, Vector2 b)
+        {
+            // Use Manhattan since movement is 4-way
+            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
+        }
 
-            // Begin pathfinding
-            do
-            {
-                if (path.Count > 0)
-                {
-                    Vector2 currentPos = path[path.Count - 1];
-
-                    // Get the surrounding positions (forward, backward, left, right)
-                    Vector2 forward = new Vector2(currentPos.X, currentPos.Y + 32);
-                    Vector2 backward = new Vector2(currentPos.X, currentPos.Y - 32);
-                    Vector2 left = new Vector2(currentPos.X - 32, currentPos.Y);
-                    Vector2 right = new Vector2(currentPos.X + 32, currentPos.Y);
-
-                    var directions = new (Vector2 position, float distance)[]
-                    {
-                        (forward, Vector2.Distance(forward, end)),
-                        (backward, Vector2.Distance(backward, end)),
-                        (left, Vector2.Distance(left, end)),
-                        (right, Vector2.Distance(right, end))
-                    };
-
-                    // Sort directions by distance to the target
-                    Array.Sort(directions, (a, b) => a.distance.CompareTo(b.distance));
-
-                    bool moved = false;
-
-                    foreach (var (nextPos, _) in directions)
-                    {
-                        // Ensure nextPos is within bounds
-                        if (nextPos.X >= 0 && nextPos.Y >= 0 &&
-                            nextPos.Y / 32 < world_map.Length && nextPos.X / 32 < world_map[0].Length)
-                        {
-                            Tile tile = world_map[(int)nextPos.Y / 32][(int)nextPos.X / 32];
-
-                            // Check if the next tile is not an obstacle
-                            // and if any neighboring tiles are obstacles, skip this tile
-                            if (!tile.Is_Obstacle && !IsAdjacentToObstacle(nextPos, world_map) && !path.Contains(nextPos) && !been_to.Contains(nextPos))
-                            {
-                                path.Add(nextPos);
-                                moved = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    // If no movement was made, backtrack
-                    if (!moved)
-                    {
-                        if (path.Count > 1)
-                        {
-                            been_to.Add(path[path.Count - 1]);
-                            path.RemoveAt(path.Count - 1);
-                        }
-                        fails++;
-                    }
-                    else
-                    {
-                        fails = 0; // Reset fails if a move was made
-                    }
-
-                    // Check if the path is complete (within tolerance of the destination)
-                    if (Vector2.Distance(path[path.Count - 1], end) < epsilon)
-                    {
-                        complete = true;
-                    }
-
-                    // Stop if the pathfinding fails too much
-                    if (fails == 100)
-                        break;
-
-                }
-
-            } while (!complete);
-
-            // If a path was found, set waypoints
-            if (complete || path.Count > 0)
-            {
-                path.RemoveAt(0);
-                path.Insert(0, this.Position); // Add the current position as the first waypoint
-                waypoints = path;
-            }
-
-            return;
+        private IEnumerable<Vector2> GetNeighbors(Vector2 pos)
+        {
+            yield return new Vector2(pos.X + 32, pos.Y);
+            yield return new Vector2(pos.X - 32, pos.Y);
+            yield return new Vector2(pos.X, pos.Y + 32);
+            yield return new Vector2(pos.X, pos.Y - 32);
         }
 
         // Function to check if a tile is adjacent to an obstacle
-        private bool IsAdjacentToObstacle(Vector2 pos, Tile[][] world_map)
+        private bool IsAdjacentToObstacle(Vector2 pos)
         {
             var checkPositions = new Vector2[]
             {
@@ -284,10 +232,9 @@ namespace Engine_lib.Engine_AI
 
             foreach (var checkPos in checkPositions)
             {
-                if (checkPos.X >= 0 && checkPos.Y >= 0 &&
-                    checkPos.Y / 32 < world_map.Length && checkPos.X / 32 < world_map[0].Length)
+                var tile = WorldMap.GetTileAround(checkPos);
+                if (tile != null)
                 {
-                    var tile = world_map[(int)checkPos.Y / 32][(int)checkPos.X / 32];
                     if (tile.Is_Obstacle)
                         return true;
                 }
@@ -296,148 +243,16 @@ namespace Engine_lib.Engine_AI
             return false;
         }
 
-        /// <summary>
-        /// this is the new function to be used with the chunk system. not done yet. just copied and pasted the above 
-        /// function in order to alter its flow to incorporate chunk tile checks to determine the parent chunks 
-        /// of the tile being tested.
-        /// </summary>
-        protected void ChunkyPathBuilder(Tile[][] world_map)
+        private List<Vector2> ReconstructPath(Dictionary<Vector2, Vector2> cameFrom, Vector2 current)
         {
-            bool found = false;
-            Vector2 start = Vector2.Zero;
-            Vector2 end = Movement_Order_Target;
-
-            // Check if the target is an obstacle
-            try
+            var path = new List<Vector2> { current };
+            while (cameFrom.ContainsKey(current))
             {
-                if (world_map[(int)Movement_Order_Target.Y / 32][(int)Movement_Order_Target.X / 32].Is_Obstacle)
-                    return;
+                current = cameFrom[current];
+                path.Insert(0, current);
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-                return;
-            }
-
-            // Find the starting tile
-            for (int i = 0; i < world_map.Length; i++)
-            {
-                for (int j = 0; j < world_map[i].Length; j++)
-                {
-                    var tile = world_map[i][j];
-                    if (!tile.Is_Obstacle)
-                    {
-                        this.Rect = new Rectangle(this.Position.ToPoint(), new Point(1, 1));
-                        Rectangle tileRect = new Rectangle(new Vector2(tile.Position.X + 16, tile.Position.Y + 16).ToPoint(), new Point(32, 32));
-
-                        if (this.Rect.Intersects(tileRect))
-                        {
-                            start = tile.Position;
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-                if (found)
-                {
-                    break;
-                }
-            }
-
-            // If starting tile not found, exit early
-            if (!found)
-                return;
-
-            List<Vector2> been_to = new List<Vector2>();
-            List<Vector2> path = new List<Vector2> { start };
-
-            int fails = 0;
-            bool complete = false;
-            float epsilon = 0.1f; // Tolerance for floating-point comparison
-
-            // Begin pathfinding
-            do
-            {
-                if (path.Count > 0)
-                {
-                    Vector2 currentPos = path[path.Count - 1];
-
-                    // Get the surrounding positions (forward, backward, left, right)
-                    Vector2 forward = new Vector2(currentPos.X, currentPos.Y + 32);
-                    Vector2 backward = new Vector2(currentPos.X, currentPos.Y - 32);
-                    Vector2 left = new Vector2(currentPos.X - 32, currentPos.Y);
-                    Vector2 right = new Vector2(currentPos.X + 32, currentPos.Y);
-
-                    var directions = new (Vector2 position, float distance)[]
-                    {
-                        (forward, Vector2.Distance(forward, end)),
-                        (backward, Vector2.Distance(backward, end)),
-                        (left, Vector2.Distance(left, end)),
-                        (right, Vector2.Distance(right, end))
-                    };
-
-                    // Sort directions by distance to the target
-                    Array.Sort(directions, (a, b) => a.distance.CompareTo(b.distance));
-
-                    bool moved = false;
-
-                    foreach (var (nextPos, _) in directions)
-                    {
-                        // Ensure nextPos is within bounds
-                        if (nextPos.X >= 0 && nextPos.Y >= 0 &&
-                            nextPos.Y / 32 < world_map.Length && nextPos.X / 32 < world_map[0].Length)
-                        {
-                            Tile tile = world_map[(int)nextPos.Y / 32][(int)nextPos.X / 32];
-
-                            // Check if the next tile is not an obstacle
-                            // and if any neighboring tiles are obstacles, skip this tile
-                            if (!tile.Is_Obstacle && !IsAdjacentToObstacle(nextPos, world_map) && !path.Contains(nextPos) && !been_to.Contains(nextPos))
-                            {
-                                path.Add(nextPos);
-                                moved = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    // If no movement was made, backtrack
-                    if (!moved)
-                    {
-                        if (path.Count > 1)
-                        {
-                            been_to.Add(path[path.Count - 1]);
-                            path.RemoveAt(path.Count - 1);
-                        }
-                        fails++;
-                    }
-                    else
-                    {
-                        fails = 0; // Reset fails if a move was made
-                    }
-
-                    // Check if the path is complete (within tolerance of the destination)
-                    if (Vector2.Distance(path[path.Count - 1], end) < epsilon)
-                    {
-                        complete = true;
-                    }
-
-                    // Stop if the pathfinding fails too much
-                    if (fails == 100)
-                        break;
-
-                }
-
-            } while (!complete);
-
-            // If a path was found, set waypoints
-            if (complete || path.Count > 0)
-            {
-                path.RemoveAt(0);
-                path.Insert(0, this.Position); // Add the current position as the first waypoint
-                waypoints = path;
-            }
-
-            return;
+            return path;
         }
+
     }
 }
