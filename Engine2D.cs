@@ -7,8 +7,14 @@ using System.Text.RegularExpressions;
 
 namespace Engine_lib
 {
+	/// <summary>
+	/// this component adds on to the core components and adds the 
+	/// scenemanager, global instance, and more. also handles keyboard input 
+	/// for text box and input use cases.
+	/// </summary>
 	public class Engine2D : EngineCore
 	{		
+		public SceneManager sceneManager { get; protected set; }
         public static Engine2D current { get; private set; }
 
         public TextureManager textureManager { get; protected set; }
@@ -20,6 +26,7 @@ namespace Engine_lib
         protected Engine2D()
 		{
 			random = new Random();
+			sceneManager = new SceneManager();
 			this.GUI_MANAGER = new GUIManager(this);
 			// this is required to get keyboard info for text gui elements.
 			this.Window.TextInput += (s, a) => {
@@ -76,29 +83,11 @@ namespace Engine_lib
             {
                 Camera2D.main_camera.Update();
             }
-        }
 
-        // ---- SCENE MANAGER -------------------
-        /// <summary>
-        /// what happens when the scene changes.
-        /// </summary>
-        public static Action OnSceneClose { get; set; }
-
-        protected static SceneModel currentScene { get; set; }
-
-        /// <summary>
-        /// update the current scene
-        /// </summary>
-        /// <param name="newscene"></param>
-        public static void NewScene(SceneModel newscene)
-        {
-			if (OnSceneClose != null)
+			if (SceneManager.currentScene != null)
 			{
-				OnSceneClose.Invoke();
+				SceneManager.currentScene.Update(gameTime);
 			}
-
-            currentScene = null;
-            currentScene = newscene;
         }
     }
 }

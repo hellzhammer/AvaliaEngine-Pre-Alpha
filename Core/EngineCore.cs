@@ -1,9 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Runtime.CompilerServices;
 
 namespace Engine_lib.Core
 {
+    /// <summary>
+    /// this component contains all logic to create primitive shapes and lines. 
+    /// also contains the logic to add and remove game components 
+    /// to the engines underlying framework
+    /// </summary>
     public class EngineCore : Game
     {
         public static Random random { get; set; }
@@ -60,11 +64,6 @@ namespace Engine_lib.Core
         /// <summary>
         /// draws a primitive square
         /// </summary>
-        /// <param name="device"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="paint"></param>
-        /// <returns></returns>
         public static Texture2D CreateSquare(GraphicsDevice device, int width, int height, Func<int, Color> paint)
         {
             Texture2D texture = new Texture2D(device, width, height);
@@ -82,11 +81,6 @@ namespace Engine_lib.Core
         /// <summary>
         /// draws a primitive square with outline
         /// </summary>
-        /// <param name="device"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="paint"></param>
-        /// <returns></returns>
         public static Texture2D CreateOutlinedSquare(GraphicsDevice device, int width, int height, Func<int, Color> paint)
         {
             int dist = 10;
@@ -115,42 +109,35 @@ namespace Engine_lib.Core
         }
 
         /// <summary>
-        /// draws lines between 2 points. global.
+        /// draws a primitive circle.
         /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <param name="color"></param>
-        /// <param name="thickness"></param>
-        /// <param name="sprite"></param>
-        public static void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, SpriteBatch sprite)
+        public static Texture2D CreateCircle(GraphicsDevice device, float radius, int width, int height, Color paint)
         {
-            // Calculate the distance and angle between the points
-            float distance = Vector2.Distance(start, end);
-            float angle = (float)Math.Atan2(end.Y - start.Y, end.X - start.X);
+            Texture2D texture = new Texture2D(device, width, height);
+            List<Color> data = new List<Color>();
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    var dist = Vector2.Distance(new Vector2(x, y), new Vector2(width / 2, height / 2));
+                    if (dist <= radius)
+                    {
+                        data.Add(paint);
+                    }
+                    else
+                    {
+                        data.Add(Color.Transparent);
+                    }
+                }
+            }
 
-            // Draw the line
-            sprite.Draw(
-                Engine2D.CreateCircle(Engine2D.graphics.GraphicsDevice, 1, 1, 1, Color.DarkGray),
-                start,
-                null,
-                color,
-                angle,
-                Vector2.Zero,
-                new Vector2(distance, thickness),
-                SpriteEffects.None,
-                0
-            );
+            texture.SetData(data.ToArray());
+            return texture;
         }
 
         /// <summary>
         /// draws a primitive circle.
         /// </summary>
-        /// <param name="spriteBatch"></param>
-        /// <param name="center"></param>
-        /// <param name="radius"></param>
-        /// <param name="segments"></param>
-        /// <param name="color"></param>
-        /// <param name="thickness"></param>
         public static void DrawCircle(SpriteBatch spriteBatch, Vector2 center, float radius, int segments, Color color, float thickness)
         {
             float angleStep = MathHelper.TwoPi / segments;
@@ -177,14 +164,31 @@ namespace Engine_lib.Core
         }
 
         /// <summary>
+        /// draws lines between 2 points. global.
+        /// </summary>
+        public static void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, SpriteBatch sprite)
+        {
+            // Calculate the distance and angle between the points
+            float distance = Vector2.Distance(start, end);
+            float angle = (float)Math.Atan2(end.Y - start.Y, end.X - start.X);
+
+            // Draw the line
+            sprite.Draw(
+                Engine2D.CreateCircle(Engine2D.graphics.GraphicsDevice, 1, 1, 1, Color.DarkGray),
+                start,
+                null,
+                color,
+                angle,
+                Vector2.Zero,
+                new Vector2(distance, thickness),
+                SpriteEffects.None,
+                0
+            );
+        }
+
+        /// <summary>
         /// uses rendering engine to draw a line from point a to b;
         /// </summary>
-        /// <param name="spriteBatch"></param>
-        /// <param name="texture"></param>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <param name="color"></param>
-        /// <param name="thickness"></param>
         public static void DrawLine(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 end, Color color, float thickness)
         {
             Vector2 edge = end - start;
@@ -201,39 +205,6 @@ namespace Engine_lib.Core
                 SpriteEffects.None,
                 0
             );
-        }
-
-        /// <summary>
-        /// draws a primitive circle.
-        /// </summary>
-        /// <param name="device"></param>
-        /// <param name="radius"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="paint"></param>
-        /// <returns></returns>
-        public static Texture2D CreateCircle(GraphicsDevice device, float radius, int width, int height, Color paint)
-        {
-            Texture2D texture = new Texture2D(device, width, height);
-            List<Color> data = new List<Color>();
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    var dist = Vector2.Distance(new Vector2(x, y), new Vector2(width / 2, height / 2));
-                    if (dist <= radius)
-                    {
-                        data.Add(paint);
-                    }
-                    else
-                    {
-                        data.Add(Color.Transparent);
-                    }
-                }
-            }
-
-            texture.SetData(data.ToArray());
-            return texture;
         }
     }
 }

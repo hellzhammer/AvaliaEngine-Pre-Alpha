@@ -3,13 +3,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine_lib.Core
 {
-    public abstract class SceneModel
+    public interface IScene
     {
-        protected SceneModel()
-        {
-            
-        }
+        Action OnSceneClose { get; set; }
+        void Update(GameTime gt);
+        void Draw(SpriteBatch sprite);
+    }
 
+    public abstract class SceneModel : IScene
+    {
+        public Action OnSceneClose { get; set; }
         protected virtual void Initialize()
         {
 
