@@ -89,5 +89,10 @@ namespace Engine_lib
 				SceneManager.currentScene.Update(gameTime);
 			}
         }
+
+		public virtual void QuitGame()
+		{
+			this.Exit();
+		}
     }
 }
