@@ -5,7 +5,7 @@
     <version>1.0.0</version>
     <authors>Engine_lib</authors>
     <description>Package Description</description>
-    <repository type="git" commit="5ebff6776b8a6fb7e377aad5d69e7a7ebf9f7169" />
+    <repository type="git" commit="a8c2f3a25aa478275d7e162a796c0d81b7e5f73a" />
     <dependencies>
       <group targetFramework="net6.0">
         <dependency id="MonoGame.Framework.DesktopGL" version="3.8.1.303" exclude="Build,Analyzers" />

@@ -200,7 +200,7 @@ namespace Engine_lib.Map_Components
             {
                 for (int j = 0; j < ChunkIDMap[0].Length; j++)
                 {
-                    if (WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Rect.Intersects(coords_rect))
+                    if (WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Collision_Rect.Intersects(coords_rect))
                     {
                         found = WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]];
                         break;

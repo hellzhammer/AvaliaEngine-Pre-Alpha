@@ -24,7 +24,7 @@ namespace Engine_lib.Map_Components
             {
                 this.CurrentAmount = 5;
             }
-            this.Rect = new Rectangle(this.Position.ToPoint(), new Point(32, 32));
+            this.Collision_Rect = new Rectangle(this.Position.ToPoint(), new Point(32, 32));
         }
 
         public override void Update(GameTime gt)

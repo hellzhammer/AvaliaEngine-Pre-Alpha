@@ -48,7 +48,7 @@ public class GUI_View_Manager : GameComponent
 		}
 	}
 
-    public void Remove_GUI(string id)
+    public void Remove_View(string id)
 	{
 		if (GUI.ContainsKey(id))
 		{
@@ -60,7 +60,7 @@ public class GUI_View_Manager : GameComponent
 		}
 	}
 
-	public void Add_GUI(string id, View view)
+	public void Add_View(string id, View view)
 	{
 		if (!GUI.ContainsKey(id))
 		{

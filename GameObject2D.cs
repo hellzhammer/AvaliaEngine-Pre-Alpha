@@ -6,15 +6,17 @@ namespace Engine_lib
 {
     public class GameObject2D
 	{
-		/// <summary>
-		/// the objects texture name for streaming.
-		/// </summary>
-		public readonly string texture_name;
-		
-		/// <summary>
-		/// the objects rect, for collision and render checks.
-		/// </summary>
-		public Rectangle Rect { get; protected set; }
+        public string id { get; protected set; }
+        /// <summary>
+        /// the objects texture name for streaming.
+        /// </summary>
+        public readonly string texture_name;
+        public string object_name { get; set; }
+
+        /// <summary>
+        /// the objects rect, for collision and render checks.
+        /// </summary>
+        public Rectangle Collision_Rect { get; protected set; }
 
 		/// <summary>
 		/// where in the n*n space the object is drawn.
@@ -26,11 +28,8 @@ namespace Engine_lib
 		/// </summary>
 		public Vector2 Position;
 
-        protected double next_update = 0;
         public float scale { get; set; }
         public bool is_mouse_over { get; protected set; }
-        public string id { get; protected set; }
-        public string object_name { get; set; }
 
         public float rotation { get; set; }
 
@@ -39,13 +38,12 @@ namespace Engine_lib
         public Action OnLeftClick { get; set; }
         public Action OnRightClick { get; set; }
 
-        public bool In_Render_View { get; protected set; }
+        protected bool In_Render_View { get; set; }
 
         public GameObject2D(string ID, string obj_name, string textureName, Vector2 position)
 		{
 			if(Engine2D.random == null)
 				Engine2D.random = new Random();
-			this.next_update = Engine2D.random.Next(1, 5) * 0.0667;
 
             this.id = ID;
             this.object_name = obj_name;

@@ -22,7 +22,7 @@ namespace Engine_lib.Map_Components
             this.TileType = tiletype;
             this.Is_Obstacle = is_obstacle;
 
-            this.Rect = new Rectangle(
+            this.Collision_Rect = new Rectangle(
                 this.Position.ToPoint(),
                 new Point(
                     TextureManager.Texture_Dictionary[texture].Width,
