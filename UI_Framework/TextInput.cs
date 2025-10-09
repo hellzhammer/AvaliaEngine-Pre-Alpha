@@ -126,7 +126,7 @@ namespace Engine_lib.UI_Framework
                     Origin,
                     1.0f / Camera2D.main_camera.Zoom,
                     SpriteEffects.None,
-                    0.5f
+                    1f
                     );
             }
         }

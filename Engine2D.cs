@@ -19,7 +19,7 @@ namespace Engine_lib
 
         public TextureManager textureManager { get; protected set; }
         public static SpriteFont Game_Font { get; set; }
-		protected GUIManager GUI_MANAGER { get; set; }
+		protected GUI_View_Manager GUI_MANAGER { get; set; }
 
 		protected Camera2D camera { get; set; }	
 
@@ -27,7 +27,7 @@ namespace Engine_lib
 		{
 			random = new Random();
 			sceneManager = new SceneManager();
-			this.GUI_MANAGER = new GUIManager(this);
+			this.GUI_MANAGER = new GUI_View_Manager(this);
 			// this is required to get keyboard info for text gui elements.
 			this.Window.TextInput += (s, a) => {
 				if (TextWidget.active_text_input != null)

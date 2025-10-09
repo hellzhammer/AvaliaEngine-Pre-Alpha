@@ -4,13 +4,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 
-public class GUIManager : GameComponent
+public class GUI_View_Manager : GameComponent
 {
-	public static GUIManager current { get; private set; }
+	public static GUI_View_Manager current { get; private set; }
 	
 	public Dictionary<string, View> GUI { get; private set; }
 
-	public GUIManager(Game game) : base(game)
+	public GUI_View_Manager(Game game) : base(game)
 	{
 		GUI = new Dictionary<string, View>();
 		Game.Components.Add(this);
