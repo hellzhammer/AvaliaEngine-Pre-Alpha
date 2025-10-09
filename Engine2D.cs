@@ -13,10 +13,11 @@ namespace Engine_lib
 	/// for text box and input use cases.
 	/// </summary>
 	public class Engine2D : EngineCore
-	{		
-		public SceneManager sceneManager { get; protected set; }
+	{
         public static Engine2D current { get; private set; }
 
+        public EntityManager entityManager { get; protected set; }
+        public SceneManager sceneManager { get; protected set; }
         public TextureManager textureManager { get; protected set; }
         public static SpriteFont Game_Font { get; set; }
 		protected GUI_View_Manager GUI_MANAGER { get; set; }
@@ -26,8 +27,6 @@ namespace Engine_lib
         protected Engine2D()
 		{
 			random = new Random();
-			sceneManager = new SceneManager();
-			this.GUI_MANAGER = new GUI_View_Manager(this);
 			// this is required to get keyboard info for text gui elements.
 			this.Window.TextInput += (s, a) => {
 				if (TextWidget.active_text_input != null)
@@ -66,7 +65,11 @@ namespace Engine_lib
 
 			graphics = new GraphicsDeviceManager(this);
 			current = this;
-		}
+
+            sceneManager = new SceneManager();
+            entityManager = new EntityManager();
+            this.GUI_MANAGER = new GUI_View_Manager(this);
+        }
 
         protected override void Initialize()
         {

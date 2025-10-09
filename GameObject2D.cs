@@ -1,50 +1,19 @@
 ﻿using Engine_lib.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace Engine_lib
 {
-    public class GameObject2D
-	{
-        public string id { get; protected set; }
-        /// <summary>
-        /// the objects texture name for streaming.
-        /// </summary>
-        public readonly string texture_name;
-        public string object_name { get; set; }
-
-        /// <summary>
-        /// the objects rect, for collision and render checks.
-        /// </summary>
-        public Rectangle Collision_Rect { get; protected set; }
-
-		/// <summary>
-		/// where in the n*n space the object is drawn.
-		/// </summary>
-		protected Vector2 Origin { get; set; }
-
-		/// <summary>
-		/// the objects world position.
-		/// </summary>
-		public Vector2 Position;
-
-        public float scale { get; set; }
-        public bool is_mouse_over { get; protected set; }
-
-        public float rotation { get; set; }
-
+    public class GameObject2D : GameObjectParameters
+	{               
         public Action OnMouseOver { get; set; }
         public Action OnMouseExit { get; set; }
         public Action OnLeftClick { get; set; }
-        public Action OnRightClick { get; set; }
-
-        protected bool In_Render_View { get; set; }
+        public Action OnRightClick { get; set; }        
 
         public GameObject2D(string ID, string obj_name, string textureName, Vector2 position)
 		{
-			if(Engine2D.random == null)
-				Engine2D.random = new Random();
-
             this.id = ID;
             this.object_name = obj_name;
             this.texture_name = textureName;
@@ -58,14 +27,14 @@ namespace Engine_lib
 			{
                 this.Origin = new Vector2(TextureManager.Texture_Dictionary[textureName].Height/2, TextureManager.Texture_Dictionary[textureName].Width/2);
             }
-		}
 
-		public virtual void Update(GameTime gt) 
-		{
-            this.In_Render_View = Camera2D.Is_In_Render_View_BoundsCheck(this.Position);
+            Engine2D.current.entityManager.AddEntity(this);
+            Debug.WriteLine(Engine2D.current.entityManager.FindObjectsByType<GameObject2D>().Count);
+        }
 
-            if(In_Render_View)
-                Input._OnMouseOver(this);
+        public void SetInRenderView(bool update)
+        {
+            this.In_Render_View = update;
         }
 
         public void SetMouseOver(bool change)
@@ -90,5 +59,7 @@ namespace Engine_lib
 					);
             }
 		}
-	}
+
+        public virtual void Update(GameTime gt) { }
+    }
 }

@@ -61,6 +61,16 @@ namespace Engine_lib.Core
             return rtn;
         }
 
+        public bool ComponentExists(GameComponent tocheck)
+        {
+            return Engine2D.current.Components.Contains(tocheck);
+        }
+
+        public bool ComponentExists(DrawableGameComponent tocheck)
+        {
+            return Engine2D.current.Components.Contains(tocheck);
+        }
+
         /// <summary>
         /// draws a primitive square
         /// </summary>
