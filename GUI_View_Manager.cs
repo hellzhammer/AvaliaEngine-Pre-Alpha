@@ -13,7 +13,7 @@ public class GUI_View_Manager : GameComponent
 	public GUI_View_Manager(Game game) : base(game)
 	{
 		GUI = new Dictionary<string, View>();
-		Game.Components.Add(this);
+		game.Components.Add(this);
 		current = this;
 	}
 	
@@ -28,12 +28,13 @@ public class GUI_View_Manager : GameComponent
             }
 
 			timer = 0.12f;
-			Debug.WriteLine("Updating!!!!");
         }
 		else
 		{
 			timer -= (float)gt.ElapsedGameTime.TotalSeconds;
         }
+
+		base.Update(gt);
 	}
 
 	public void Draw(SpriteBatch batch)

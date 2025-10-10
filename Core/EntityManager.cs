@@ -5,40 +5,51 @@ namespace Engine_lib.Core
 {
     public class EntityManager : GameComponent
     {
-        protected Dictionary<string, GameObject2D> Entities { get; set; }
+        public Dictionary<string, GameObject2D> Entities { get; set; }
 
-        public EntityManager() : base(Engine2D.current)
+        public List<string> to_draw { get; set; }
+
+        public EntityManager(Game game) : base(game)
         {
+            to_draw = new List<string>();
             Entities = new Dictionary<string, GameObject2D>();
-
-            if(Engine2D.current.Components.Contains(this))
-                Engine2D.current.Components.Remove(this);
-
-            Engine2D.current.Components.Add(this);  
+            game.Components.Add(this);
         }
 
+        bool isrunning = false;
         public override void Update(GameTime gt) 
         {
-            List<string> toRemove = new List<string>();
-
-            foreach (var item in Entities)
+            if (!isrunning)
             {
-                if (item.Value == null) 
-                { 
-                    Debug.WriteLine($"Entity with ID: {item.Key} is null and will be removed from entity manager.");
-                    toRemove.Add(item.Key);
-                    continue;
+                isrunning = true;
+                to_draw.Clear(); // reset the drawables list
+
+                List<string> toRemove = new List<string>();
+
+                foreach (var item in Entities)
+                {
+                    if (item.Value == null)
+                    {
+                        Debug.WriteLine($"Entity with ID: {item.Key} is null and will be removed from entity manager.");
+                        toRemove.Add(item.Key);
+                        continue;
+                    }
+
+                    item.Value.SetInRenderView(Camera2D.Is_In_Render_View_BoundsCheck(item.Value.Position));
+
+                    if (item.Value.In_Render_View)
+                    {
+                        Input._OnMouseOver(item.Value);
+                        to_draw.Add(item.Key); // only draw if in render view
+                    }
                 }
 
-                item.Value.SetInRenderView(Camera2D.Is_In_Render_View_BoundsCheck(item.Value.Position));
+                for (int i = 0; i < toRemove.Count; i++)
+                {
+                    Entities.Remove(toRemove[i]);
+                }
 
-                if (item.Value.In_Render_View)
-                    Input._OnMouseOver(item.Value);
-            }
-
-            for (int i = 0; i < toRemove.Count; i++)
-            {
-                Entities.Remove(toRemove[i]);
+                isrunning = false;
             }
 
             base.Update(gt);

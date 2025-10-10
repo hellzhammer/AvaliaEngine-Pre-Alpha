@@ -61,5 +61,10 @@ namespace Engine_lib
 		}
 
         public virtual void Update(GameTime gt) { }
+
+        public static void Destroy(GameObject2D to_destroy)
+        {
+            Engine2D.current.entityManager.Entities.Remove(to_destroy.id);
+        }
     }
 }

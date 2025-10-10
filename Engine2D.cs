@@ -67,7 +67,7 @@ namespace Engine_lib
 			current = this;
 
             sceneManager = new SceneManager();
-            entityManager = new EntityManager();
+            entityManager = new EntityManager(this);
             this.GUI_MANAGER = new GUI_View_Manager(this);
         }
 
@@ -91,6 +91,8 @@ namespace Engine_lib
 			{
 				SceneManager.currentScene.Update(gameTime);
 			}
+
+			base.Update(gameTime);
         }
 
 		public virtual void QuitGame()
