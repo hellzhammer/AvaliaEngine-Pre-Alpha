@@ -37,7 +37,7 @@ namespace Engine_lib.Core
 
                     item.Value.SetInRenderView(Camera2D.Is_In_Render_View_BoundsCheck(item.Value.Position));
 
-                    if (item.Value.In_Render_View)
+                    if (item.Value.in_render_view)
                     {
                         Input._OnMouseOver(item.Value);
                         to_draw.Add(item.Key); // only draw if in render view

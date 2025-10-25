@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Engine_lib
 {
-    public class GameObject2D : GameObjectParameters
+    public class GameObject2D : GameObject, IDisposable
 	{               
         public Action OnMouseOver { get; set; }
         public Action OnMouseExit { get; set; }
@@ -19,8 +19,8 @@ namespace Engine_lib
             this.texture_name = textureName;
             this.rotation = 0;
             this.scale = 1;
-            this.In_Render_View = false;
-			this.is_mouse_over = false;
+            this.in_render_view = false;
+			this.mouse_over = false;
 			
 			this.Position = position;
 			if (!string.IsNullOrEmpty(textureName))
@@ -32,19 +32,39 @@ namespace Engine_lib
             Debug.WriteLine(Engine2D.current.entityManager.FindObjectsByType<GameObject2D>().Count);
         }
 
+        public GameObject2D(string ID, string obj_name, string textureName, float _x, float _y)
+        {
+            this.id = ID;
+            this.object_name = obj_name;
+            this.texture_name = textureName;
+            this.rotation = 0;
+            this.scale = 1;
+            this.in_render_view = false;
+            this.mouse_over = false;
+
+            this.Position = new Vector2(_x, _y);
+            if (!string.IsNullOrEmpty(textureName))
+            {
+                this.Origin = new Vector2(TextureManager.Texture_Dictionary[textureName].Height / 2, TextureManager.Texture_Dictionary[textureName].Width / 2);
+            }
+
+            Engine2D.current.entityManager.AddEntity(this);
+            Debug.WriteLine(Engine2D.current.entityManager.FindObjectsByType<GameObject2D>().Count);
+        }
+
         public void SetInRenderView(bool update)
         {
-            this.In_Render_View = update;
+            this.in_render_view = update;
         }
 
         public void SetMouseOver(bool change)
         {
-            this.is_mouse_over = change;
+            this.mouse_over = change;
         }
 
         public virtual void Draw(SpriteBatch batch) 
 		{
-			if (In_Render_View)
+			if (in_render_view)
 			{
 				batch.Draw(
 					TextureManager.Texture_Dictionary[this.texture_name], 
@@ -65,6 +85,16 @@ namespace Engine_lib
         public static void Destroy(GameObject2D to_destroy)
         {
             Engine2D.current.entityManager.Entities.Remove(to_destroy.id);
+        }
+
+        public virtual void Dispose()
+        {
+            Destroy(this);
+        }
+
+        public static void Dispose(GameObject2D to_dispose)
+        {
+            to_dispose.Dispose();
         }
     }
 }

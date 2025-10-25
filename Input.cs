@@ -96,7 +96,7 @@ public static class Input
 				)
 			);
 
-		if (obj_rect.Intersects(Mouse_Rect) && !val.is_mouse_over)
+		if (obj_rect.Intersects(Mouse_Rect) && !val.mouse_over)
 		{
 			val.SetMouseOver(true);
 			if (val.OnMouseOver != null)
@@ -104,7 +104,7 @@ public static class Input
 				val.OnMouseOver.Invoke();
 			}
 		}
-		else if (!obj_rect.Intersects(Mouse_Rect) && val.is_mouse_over)
+		else if (!obj_rect.Intersects(Mouse_Rect) && val.mouse_over)
 		{
 			val.SetMouseOver(false);
 			if (val.OnMouseExit != null)
@@ -113,14 +113,14 @@ public static class Input
 			}
 		}
 
-		if (obj_rect.Intersects(Mouse_Rect) && val.is_mouse_over && Input.LeftMouseDown(MouseButton.Left))
+		if (obj_rect.Intersects(Mouse_Rect) && val.mouse_over && Input.LeftMouseDown(MouseButton.Left))
 		{
 			if (val.OnLeftClick != null)
 			{
 				val.OnLeftClick.Invoke();
 			}
 		}
-		else if (obj_rect.Intersects(Mouse_Rect) && val.is_mouse_over && Input.RightMouseDown(MouseButton.Right))
+		else if (obj_rect.Intersects(Mouse_Rect) && val.mouse_over && Input.RightMouseDown(MouseButton.Right))
 		{
 			if (val.OnRightClick != null)
 			{
