@@ -23,9 +23,21 @@ namespace Engine_lib.Core
 
         }
 
+        /// <summary>
+        /// base draws ONLY entities available in the "to_draw" array.
+        /// </summary>
         public virtual void Draw(SpriteBatch sprite)
         {
-
+            if (Engine2D.current.entityManager != null 
+                && Engine2D.current.entityManager.Entities != null 
+                && Engine2D.current.entityManager.to_draw != null)
+            {
+                var items = Engine2D.current.entityManager.to_draw;
+                for (int i = 0; i < items.Count; i++)
+                {
+                    Engine2D.current.entityManager.Entities[items[i]].Draw(sprite);
+                }
+            }
         }
     }
 }

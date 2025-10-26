@@ -5,8 +5,23 @@ using System.Diagnostics;
 
 namespace Engine_lib
 {
-    public class GameObject2D : GameObject, IDisposable
-	{               
+    public class GameObject2D : EntityObject, IDisposable
+	{
+        public Vector2 Position
+        {
+            get
+            {
+                return new Vector2(X, Y);
+            }
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+        }
+        public Rectangle Collision_Rect { get; protected set; }
+        public Vector2 Origin { get; set; }
+
         public Action OnMouseOver { get; set; }
         public Action OnMouseExit { get; set; }
         public Action OnLeftClick { get; set; }
