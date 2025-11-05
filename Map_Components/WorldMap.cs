@@ -1,4 +1,4 @@
-﻿/*using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace Engine_lib.Map_Components
@@ -32,7 +32,7 @@ namespace Engine_lib.Map_Components
         /// builds the world using procedural generation, applying the settings provided by the player/developer
         /// </summary>
         protected string[][] BuildMap(int xoffset, int yoffset)
-        {               
+        {
             string[][] world_id_map = new string[MapHeight][];
 
             //var world = new Tile[MapHeight][];
@@ -170,7 +170,7 @@ namespace Engine_lib.Map_Components
             }
             else if (val == 8)
             {
-               t = new Tile("Snow", 6, "Tile-" + j + "-" + i, "Snow", new Vector2(j * 32, i * 32), false);
+                t = new Tile("Snow", 6, "Tile-" + j + "-" + i, "Snow", new Vector2(j * 32, i * 32), false);
             }
 
             // create mud for vegetation
@@ -215,7 +215,7 @@ namespace Engine_lib.Map_Components
             else if (val == 4)
             {
                 t = new Tile("Sand", 1, "Tile-" + j + "-" + i, "Sand", new Vector2(j * 32, i * 32), false);
-            }            
+            }
             else if (val == 5)
             {
                 t = new Tile("Sand", 1, "Tile-" + j + "-" + i, "Sand", new Vector2(j * 32, i * 32), false);
@@ -352,4 +352,3 @@ namespace Engine_lib.Map_Components
         }
     }
 }
-*/

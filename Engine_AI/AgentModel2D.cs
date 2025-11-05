@@ -1,4 +1,4 @@
-﻿/*using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Engine_lib.Map_Components;
 using System.Diagnostics;
@@ -68,10 +68,10 @@ namespace Engine_lib.Engine_AI
         {
             if (waypoints != null && waypoints.Count > 1)
             {
-                for (int i = 2; i < waypoints.Count; i+=2)
+                for (int i = 2; i < waypoints.Count; i += 2)
                 {
-                    Engine2D.DrawLine(waypoints[i-2], waypoints[i], Color.Red, 6, sprite);
-                    Engine2D.DrawCircle(sprite, waypoints[waypoints.Count-2], 92, 6, Color.Green, 6);
+                    Engine2D.DrawLine(waypoints[i - 2], waypoints[i], Color.Red, 6, sprite);
+                    Engine2D.DrawCircle(sprite, waypoints[waypoints.Count - 2], 92, 6, Color.Green, 6);
                 }
             }
             else if (waypoints != null && waypoints.Count == 1)
@@ -256,4 +256,3 @@ namespace Engine_lib.Engine_AI
 
     }
 }
-*/

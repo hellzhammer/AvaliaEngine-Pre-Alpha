@@ -1,4 +1,4 @@
-﻿/*using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace Engine_lib.Map_Components
@@ -73,7 +73,7 @@ namespace Engine_lib.Map_Components
                             {
                                 // create tree
                                 var go = new ResourceModel(
-                                        Chunk_ID + "-" + WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position.X + "-" + WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position.Y, "Tree", 
+                                        Chunk_ID + "-" + WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position.X + "-" + WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position.Y, "Tree",
                                         "Tree",
                                         WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position,
                                         resource_type: ResourceModel.ResourceType.Wood
@@ -298,4 +298,4 @@ namespace Engine_lib.Map_Components
             }
         }
     }
-}*/
+}

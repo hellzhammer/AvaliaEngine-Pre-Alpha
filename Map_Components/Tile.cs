@@ -1,4 +1,4 @@
-﻿/*using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Engine_lib.Core;
 
@@ -33,9 +33,9 @@ namespace Engine_lib.Map_Components
 
         public override void Update(GameTime gt)
         {
-            this.In_Render_View = Camera2D.Is_In_Render_View_BoundsCheck(this.Position);
+            this.in_render_view = Camera2D.Is_In_Render_View_BoundsCheck(this.Position);
 
-            if (In_Render_View)
+            if (this.in_render_view)
                 Input._OnMouseOver(this);
 
             TrackMouseOver();
@@ -43,7 +43,7 @@ namespace Engine_lib.Map_Components
 
         public override void Draw(SpriteBatch batch)
         {
-            if (In_Render_View)
+            if (this.in_render_view)
             {
                 batch.Draw(TextureManager.Texture_Dictionary[texture_name], Position, Color.White);
             }
@@ -56,9 +56,8 @@ namespace Engine_lib.Map_Components
         /// </summary>
         private void TrackMouseOver()
         {
-            if (this.is_mouse_over)
+            if (this.mouse_over)
                 WorldMap.MouseOverTile = this;
         }
     }
 }
-*/
