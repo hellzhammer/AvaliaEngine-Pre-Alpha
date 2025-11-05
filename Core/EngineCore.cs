@@ -10,7 +10,7 @@ namespace Engine_lib.Core
     /// </summary>
     public class EngineCore : Game
     {
-        public static Random random { get; set; }
+        public static Random random { get; set; } // to remove. not needed in this iteration of the engine library. Maybe never needed it?
 
         protected SpriteBatch spriteBatch { get; set; }
         public static GraphicsDeviceManager graphics { get; protected set; }

@@ -26,14 +26,14 @@ namespace Engine_lib.UI_Framework
             Initialize(device);
         }
 
-        public override void Update(SpriteFont font)
+        public override void Update()
         {
             display_string = string.Empty;
             int max = (int)_width - 18;
             
             for (int i = 0; i < Content.Length; i++)
             {
-                var len = font.MeasureString(display_string + Content[i]);
+                var len = Engine2D.Game_Font.MeasureString(display_string + Content[i]);
                 if (len.X < max)
                 {
                     display_string += Content[i];
@@ -66,13 +66,13 @@ namespace Engine_lib.UI_Framework
             }
         }
 
-        public override void Draw(bool simple_draw, SpriteBatch sprite, Matrix viewport, SpriteFont font)
+        public override void Draw(bool simple_draw, SpriteBatch sprite, Matrix viewport)
         {
             base.Draw(simple_draw, sprite, viewport);
             if (!string.IsNullOrWhiteSpace(Content))
             {
                 sprite.DrawString(
-                    font,
+                    Engine2D.Game_Font,
                     display_string,
 					Camera2D.ScreenToWorldSpace(new Vector2(Position.X + 5, Position.Y + 5), viewport),
                     font_color,

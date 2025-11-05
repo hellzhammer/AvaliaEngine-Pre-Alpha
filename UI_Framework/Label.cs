@@ -20,13 +20,13 @@ namespace Engine_lib.UI_Framework
             this.Initialize(device);
         }
 
-		public override void Draw(bool simple_draw, SpriteBatch batch, Matrix viewport, SpriteFont font)
+		public override void Draw(bool simple_draw, SpriteBatch batch, Matrix viewport)
 		{
 			base.Draw(true, batch, viewport);
 			if (!string.IsNullOrWhiteSpace(Content))
 			{
 				batch.DrawString(
-					font,
+					Engine2D.Game_Font,
 					Content,
 					Camera2D.ScreenToWorldSpace(new Vector2(Position.X + 5, Position.Y + 5), viewport),
 					font_color,

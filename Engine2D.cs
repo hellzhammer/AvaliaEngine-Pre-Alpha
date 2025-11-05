@@ -26,7 +26,7 @@ namespace Engine_lib
 
         protected Engine2D()
 		{
-			random = new Random();
+			random = new Random(); // to remove -- not needed internally. Not for now anyways. 
 			// this is required to get keyboard info for text gui elements.
 			this.Window.TextInput += (s, a) => {
 				if (TextWidget.active_text_input != null)

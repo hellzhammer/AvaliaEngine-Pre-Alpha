@@ -1,0 +1,13 @@
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\bin\Release\net8.0\linux-arm64\Engine_lib.deps.json
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\bin\Release\net8.0\linux-arm64\Engine_lib.dll
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\bin\Release\net8.0\linux-arm64\Engine_lib.pdb
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\Engine_lib.csproj.AssemblyReference.cache
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\Engine_lib.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\Engine_lib.AssemblyInfoInputs.cache
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\Engine_lib.AssemblyInfo.cs
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\Engine_lib.csproj.CoreCompileInputs.cache
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\Engine_lib.sourcelink.json
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\Engine_lib.dll
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\refint\Engine_lib.dll
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\Engine_lib.pdb
+C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\obj\Release\net8.0\linux-arm64\ref\Engine_lib.dll

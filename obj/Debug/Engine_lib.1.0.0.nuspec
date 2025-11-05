@@ -5,14 +5,14 @@
     <version>1.0.0</version>
     <authors>Engine_lib</authors>
     <description>Package Description</description>
-    <repository type="git" commit="431820d0068f446ae0f2c8aee8207c0d842de36d" />
+    <repository type="git" commit="8a63b3d7ffc123354ca5c6d16b14754fc8678e22" />
     <dependencies>
-      <group targetFramework="net6.0">
+      <group targetFramework="net8.0">
         <dependency id="MonoGame.Framework.DesktopGL" version="3.8.1.303" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="C:\Users\mattp\OneDrive\Desktop\Engine\Engine_lib\bin\Debug\net6.0\Engine_lib.dll" target="lib\net6.0\Engine_lib.dll" />
+    <file src="C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\bin\Debug\net8.0\Engine_lib.dll" target="lib\net8.0\Engine_lib.dll" />
   </files>
 </package>

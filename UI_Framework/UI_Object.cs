@@ -50,7 +50,6 @@ namespace Engine_lib.UI_Framework
         }
 
         public virtual void Update() { }
-		public virtual void Update(SpriteFont font) { }
 
 		protected Texture2D set_color(GraphicsDevice device, int width, int height, Func<int, Color> paint)
         {
