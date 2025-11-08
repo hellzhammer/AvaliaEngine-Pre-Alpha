@@ -16,22 +16,12 @@ public class ViewManager : GameComponent
 		current = this;
 	}
 	
-	float timer = 0.05f;
 	public override void Update(GameTime gt)
 	{
-		if (timer <= 0)
-		{
-			if (current_view != null)
-                current_view.Update(gt);
+        if (current_view != null)
+            current_view.Update(gt);
 
-            timer = 0.12f;
-        }
-		else
-		{
-			timer -= (float)gt.ElapsedGameTime.TotalSeconds;
-        }
-
-		base.Update(gt);
+        base.Update(gt);
 	}
 
 	public void Draw(SpriteBatch batch)
