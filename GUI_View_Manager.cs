@@ -72,4 +72,9 @@ public class GUI_View_Manager : GameComponent
 			Debug.WriteLine("An element with that ID already exists!");
 		}
 	}
+
+	public void ClearStack()
+	{
+		GUI = new Dictionary<string, View>();
+    }
 }
