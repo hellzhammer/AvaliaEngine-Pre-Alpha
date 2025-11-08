@@ -24,7 +24,7 @@ public class ViewManager : GameComponent
         base.Update(gt);
 	}
 
-	public void Draw(SpriteBatch batch)
+	public virtual void Draw(SpriteBatch batch)
 	{
 		var vMat = Camera2D.main_camera.GetViewMatrix();
 		if(current_view != null)
@@ -34,7 +34,7 @@ public class ViewManager : GameComponent
     /// <summary>
 	/// adds a view to the top of the stack.
 	/// </summary>
-    public void NewView(View view)
+    public virtual void NewView(View view)
 	{
 		if (current_view != view)
 		{
@@ -49,7 +49,7 @@ public class ViewManager : GameComponent
 	/// <summary>
 	/// clears the current ui view
 	/// </summary>
-	public void ClearStack()
+	public virtual void ClearStack()
 	{
 		current_view = null;
     }
