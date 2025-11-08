@@ -20,7 +20,7 @@ namespace Engine_lib
         public SceneManager sceneManager { get; protected set; }
         public TextureManager textureManager { get; protected set; }
         public static SpriteFont Game_Font { get; set; }
-		protected GUI_View_Manager GUI_MANAGER { get; set; }
+		protected ViewManager GUI_MANAGER { get; set; }
 
 		protected Camera2D camera { get; set; }	
 
@@ -68,7 +68,7 @@ namespace Engine_lib
 
             sceneManager = new SceneManager();
             entityManager = new EntityManager(this);
-            this.GUI_MANAGER = new GUI_View_Manager(this);
+            this.GUI_MANAGER = new ViewManager(this);
         }
 
         protected override void Initialize()
