@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Engine_lib")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a63b3d7ffc123354ca5c6d16b14754fc8678e22")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2dbba058cff60f43836772fd85ebeb3eea48ec81")]
 [assembly: System.Reflection.AssemblyProductAttribute("Engine_lib")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Engine_lib")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

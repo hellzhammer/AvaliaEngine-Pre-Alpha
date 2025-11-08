@@ -7,41 +7,103 @@ public enum MouseButton
 {
 	Left, Right, Middle
 }
+public enum  Thumbsticks
+{
+    Left, Right
+}
+
 public static class Input
 {
+    public static bool Use_Mouse_Keyboard = true;
+    public static bool Use_Controller = false;
+
     public static Vector2 MousePosition { get; private set; }
 	public static Vector2 MouseWorldPosition { get; private set; }
-    public static bool Allow_Keyboard = true;
-	private static KeyboardState key_board_state { get; set; }
-	private static MouseState mouse_state { get; set; }
+
+	public static Vector2 GetThumbstick(Thumbsticks stick)
+	{
+		return stick switch
+		{
+			Thumbsticks.Left => new Vector2(current_controller_state.ThumbSticks.Left.X, current_controller_state.ThumbSticks.Left.Y),
+			Thumbsticks.Right => new Vector2(current_controller_state.ThumbSticks.Right.X, current_controller_state.ThumbSticks.Right.Y),
+			_ => Vector2.Zero,
+		};
+    }
+
+	// input states
+    private static MouseState last_mouse_state { get; set; }
+    private static MouseState mouse_state { get; set; }
 
 	private static KeyboardState last_key_board_state { get; set; }
-	private static MouseState last_mouse_state { get; set; }
+    private static KeyboardState key_board_state { get; set; }    
 
-	public static MouseState Get_Mouse_State()
+	private static GamePadState current_controller_state { get; set; }
+    private static GamePadState last_controller_state { get; set; }
+
+    public static MouseState Get_Mouse_State()
 	{
 		return mouse_state;
 	}
 
-	public static KeyboardState Get_Keyboard_State()
+	public static GamePadState Get_GamePad_State(int index)
+	{
+		return last_controller_state;
+    }
+
+    public static KeyboardState Get_Keyboard_State()
 	{
 		return key_board_state;
 	}
 
 	public static void Update()
 	{
+		if(Use_Mouse_Keyboard)
+            Update_Mouse_Keyboard();
+
+        if (Use_Controller)
+            Update_Controller();
+    }
+
+	private static void Update_Mouse_Keyboard()
+	{
         // update the mouse position
         var mstate = Input.Get_Mouse_State();
         MousePosition = new Vector2(mstate.X, mstate.Y);
         MouseWorldPosition = Camera2D.ScreenToWorldSpace(MousePosition, Camera2D.main_camera.GetViewMatrix());
 
+        // update the keyboard and mouse states
         last_mouse_state = mouse_state;
-		last_key_board_state = key_board_state;
-		key_board_state = Keyboard.GetState();
-		mouse_state = Mouse.GetState();
-	}
+        last_key_board_state = key_board_state;
+        key_board_state = Keyboard.GetState();
+        mouse_state = Mouse.GetState();
+    }
 
-	public static bool KeyUp(Keys key)
+    private static void Update_Controller()
+	{
+		var curr_controller_state = Get_GamePad_State(0);
+
+		// do stuff here
+
+		last_controller_state = current_controller_state;
+        current_controller_state = curr_controller_state;
+    }
+
+	public static bool ControllerButtonDown(Buttons button)
+	{
+		return current_controller_state.IsButtonUp(button) && Get_GamePad_State(0).IsButtonDown(button);
+    }
+
+	public static bool ControllerButtonUp(Buttons button)
+	{
+		return last_controller_state.IsButtonDown(button) && Get_GamePad_State(0).IsButtonUp(button);
+    }
+
+    public static bool ControllerButtonHold(Buttons key)
+    {
+        return current_controller_state.IsButtonDown(key) && last_controller_state.IsButtonDown(key);
+    }
+
+    public static bool KeyUp(Keys key)
 	{
 		return last_key_board_state.IsKeyDown(key) && key_board_state.IsKeyUp(key);
 	}

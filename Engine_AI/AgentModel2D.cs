@@ -204,7 +204,6 @@ namespace Engine_lib.Engine_AI
             Debug.WriteLine("Pathfinding failed to find a path.");
         }
 
-
         private float Heuristic(Vector2 a, Vector2 b)
         {
             // Use Manhattan since movement is 4-way
