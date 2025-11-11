@@ -23,6 +23,7 @@ NOTES:
 The procedural world generation system is still a work in progress. There will be significant changes in the future. 
 You do not have to use the system, it is just there as an experimental feature. The texture dictionary is vital to know though.
 Not adding these textures will cause game to crash. 
+
 	-FOR WORLDMAP.BUILDMAP() TO WORK YOU MUST ADD THESE TILES TO YOUR TEXTURE DICTIONARY, NAMED EXACTLY AS FOLLOWS:
 		Grass
 		Mud
@@ -34,9 +35,15 @@ The textures are loaded when loading content. All game textures are stored insid
 The only system NOT using the texture manager is the GUI system. Which still relies on direct texture loading. This will be changed in the future.
 
 For example, this is the TextureManager:
-public class TextureManager
+
+
+    public class TextureManager
     {
-        public static Dictionary<string, Texture2D> Texture_Dictionary { get; protected set; }
+        public static Dictionary<string, Texture2D> Texture_Dictionary 
+        { 
+            get; 
+            protected set; 
+        }
 
         public TextureManager(Dictionary<string, Texture2D> textdict) 
         {
