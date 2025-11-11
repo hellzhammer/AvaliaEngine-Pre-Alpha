@@ -60,25 +60,6 @@ namespace Engine_lib.UI_Framework
             }
         }
 
-		/*public virtual void Draw(SpriteBatch batch, SpriteFont font)
-		{
-			if (this.background != null)
-			{
-			    batch.Draw(background, Position, Color.White); 
-			}
-		}
-
-		public virtual void Draw(bool simple_draw, SpriteBatch batch, Matrix viewport, SpriteFont font)
-		{
-			if (this.background != null)
-			{
-				if (!simple_draw)
-					batch.Draw(background, Camera2D.ScreenToWorldSpace(Position, viewport), Color.White); // this works for menu, where below does not.
-				else if (simple_draw)
-					batch.Draw(background, Camera2D.ScreenToWorldSpace(Position, viewport), this.rect, Color.White, this.Rotation, Origin, 1 / Camera2D.main_camera.Zoom, SpriteEffects.None, 1);
-			}
-		}*/
-
 		public virtual void Draw(bool simple_draw, SpriteBatch batch, Matrix viewport)
         {
             if (this.background != null)

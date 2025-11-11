@@ -13,7 +13,7 @@ namespace Engine_lib.UI_Framework
             this._height = height;
             this._width = width;
 
-            this.name = name;
+            this.object_name = name;
             this.Position = pos;
             this.Content = content;
 

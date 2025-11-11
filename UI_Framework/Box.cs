@@ -7,16 +7,13 @@ namespace Engine_lib.UI_Framework
     {
         public WidgetOrientation Orientation = WidgetOrientation.Vertical;
         public int padding = 0;
-        
-        private List<Widget> Children { get; set; }
 
         public Box(string name, Vector2 pos, float width, float height, GraphicsDevice device)
         {
-            this.Children = new List<Widget>();
             this._height = height;
             this._width = width;
 
-            this.name = name;
+            this.object_name = name;
             this.Position = pos;
             this.Initialize(device);
         }

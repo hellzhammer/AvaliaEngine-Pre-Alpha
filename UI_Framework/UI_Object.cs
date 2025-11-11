@@ -5,10 +5,10 @@ namespace Engine_lib.UI_Framework
 {
     public abstract class UI_Object
     {
-        public bool Is_Active { get; protected set; }
+        public bool Active { get; protected set; }
         private bool ContainsText = false;
         public bool contain_text { get { return ContainsText; } protected set { ContainsText = value; } }
-        public string name { get; set; }
+        public string object_name { get; set; }
         public Vector2 Position { get; set; }
 
         public float Rotation = 0.0f;
@@ -21,7 +21,7 @@ namespace Engine_lib.UI_Framework
 
         public void SetActive(bool value)
         {
-            this.Is_Active = value;
+            this.Active = value;
         }
 
         public void SetWidth(float width)
