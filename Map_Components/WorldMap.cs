@@ -15,6 +15,11 @@ namespace Engine_lib.Map_Components
         public int MapWidth { get; protected set; }
         public int MapHeight { get; protected set; }
 
+        /// <summary>
+        /// Ensure that 
+        /// Grass, Mud, Water, Sand, Mountain tiles 
+        /// are already added to your texture dictionary. this is a work in progress.
+        /// </summary>
         public WorldMap(int x, int y, string mapname = "default")
         {
             MapWidth = x;

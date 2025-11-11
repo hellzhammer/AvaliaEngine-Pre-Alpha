@@ -1,14 +1,42 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
+	<PropertyGroup>
+		<!-- Targeting .NET 8 -->
+		<TargetFramework>net8.0</TargetFramework>
 
-  <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-  </ItemGroup>
+		<!-- Enable modern C# defaults -->
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Automatically create a NuGet package on build -->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+		<!-- Package Metadata -->
+		<PackageId>Engine_lib</PackageId>
+		<Version>0.1.0-beta</Version>
+		<Authors>Hellzhammer, Matt Perley</Authors>
+		<Company>Hooley Automation</Company>
+		<Product>Engine_lib</Product>
+		<Description>Engine_lib is a modular UI and gameplay framework built on MonoGame, designed for extensible 2D projects.</Description>
+		<Copyright>© 2025 Hooley Automation. All rights reserved.</Copyright>
+		<RepositoryUrl>https://github.com/hellzhammer/AvaliaEngine-Pre-Alpha</RepositoryUrl>
+		<PackageProjectUrl>http://pixel-forge-engine.hooleyautomation.xyz</PackageProjectUrl>
+		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageTags>monogame; game-engine; ui-framework; csharp; game-framework, hooley-automation</PackageTags>
+
+		<!-- Assembly Info -->
+		<AssemblyTitle>Engine_lib</AssemblyTitle>
+		<AssemblyVersion>0.1.0.0</AssemblyVersion>
+		<FileVersion>0.1.0.0</FileVersion>
+
+		<!-- Optional build configuration -->
+		<RootNamespace>Engine_lib</RootNamespace>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
+	</ItemGroup>
 
 </Project>
