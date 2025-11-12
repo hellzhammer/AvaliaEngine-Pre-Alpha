@@ -1,8 +1,10 @@
 ﻿using Engine_lib.Core;
 using Engine_lib.UI_Framework;
+using Engine_lib.UI_Framework.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace Engine_lib
@@ -99,5 +101,30 @@ namespace Engine_lib
 		{
 			this.Exit();
 		}
+
+		public static void PopView()
+		{
+			ViewManager.current.PopView();
+        }
+
+		public static void PushView(View view)
+		{
+			ViewManager.current.PushView(view);
+        }
+
+        public static void PopAndPushNewView(View new_view)
+        {
+			if (ViewManager.current.StackCount > 0)
+			{
+                ViewManager.current.PopView();
+            }
+            ViewManager.current.PushView(new_view);
+        }
+
+        public virtual void Log(string message)
+        {
+            Console.WriteLine(message);
+            Debug.WriteLine(message);
+        }
     }
 }

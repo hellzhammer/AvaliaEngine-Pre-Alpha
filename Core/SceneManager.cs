@@ -23,5 +23,13 @@
             // add new scene
             currentScene = newscene; // new scene instance
         }
+
+        public static void ClearScene()
+        {
+            if (currentScene != null)
+            {
+                currentScene = null;
+            }
+        }
     }
 }
