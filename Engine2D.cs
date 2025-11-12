@@ -16,15 +16,14 @@ namespace Engine_lib
 	/// </summary>
 	public class Engine2D : EngineCore
 	{
+        public static SpriteFont Game_Font { get; set; }
         public static Engine2D current { get; private set; }
 
-        public EntityManager entityManager { get; protected set; }
-        public SceneManager sceneManager { get; protected set; }
-        public TextureManager textureManager { get; protected set; }
-        public static SpriteFont Game_Font { get; set; }
-		protected ViewManager GUI_MANAGER { get; set; }
+        public EntityManager entityManager { get; protected set; } // game component
+        public TextureManager textureManager { get; protected set; } // reg class        
+		protected ViewManager GUI_MANAGER { get; set; } // game component
 
-		protected Camera2D camera { get; set; }	
+		protected Camera2D main_camera { get; set; }	// reg class
 
         protected Engine2D()
 		{
@@ -68,7 +67,6 @@ namespace Engine_lib
 			graphics = new GraphicsDeviceManager(this);
 			current = this;
 
-            sceneManager = new SceneManager();
             entityManager = new EntityManager(this);
             this.GUI_MANAGER = new ViewManager(this);
         }
@@ -80,18 +78,39 @@ namespace Engine_lib
             base.Initialize();
         }
 
+        protected override void Draw(GameTime gameTime)
+        {
+            spriteBatch.Begin(transformMatrix: Camera2D.main_camera.GetViewMatrix());
+
+            // draw the actual scene first, then follow with the gui
+            if (SceneManager.currentScene != null)
+            {
+                SceneManager.Draw(spriteBatch);
+            }
+
+			// draw gui on top of scene view
+            if (GUI_MANAGER != null)
+			{
+                GUI_MANAGER.Draw(spriteBatch);
+            }
+
+            spriteBatch.End();
+
+            base.Draw(gameTime);
+        }
+
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
 
-            if (camera != null)
+            if (main_camera != null)
             {
                 Camera2D.main_camera.Update();
             }
 
 			if (SceneManager.currentScene != null)
 			{
-				SceneManager.currentScene.Update(gameTime);
+				SceneManager.Update(gameTime);
 			}
 
 			base.Update(gameTime);

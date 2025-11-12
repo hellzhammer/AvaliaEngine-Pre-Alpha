@@ -1,6 +1,9 @@
-﻿namespace Engine_lib.Core
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Engine_lib.Core
 {
-    public class SceneManager
+    public static class SceneManager
     {
         // ---- SCENE MANAGER -------------------
         public static SceneModel currentScene { get; private set; }
@@ -29,6 +32,22 @@
             if (currentScene != null)
             {
                 currentScene = null;
+            }
+        }
+
+        public static void Update(GameTime gt)
+        {
+            if (currentScene != null)
+            {
+                currentScene.Update(gt);
+            }
+        }
+
+        public static void Draw(SpriteBatch batch)
+        {
+            if (currentScene != null)
+            {
+                currentScene.Draw(batch);
             }
         }
     }
