@@ -8,7 +8,7 @@ namespace Engine_lib.UI_Framework
         public string Content { get; set; }
         public Color font_color = Color.White;
 
-        public Button(string name, string content, Vector2 pos, int width, int height, GraphicsDevice device)
+        public Button(string name, string content, Vector2 pos, int width, int height)
         {
             this.contain_text = true;
             this._height = height;
@@ -18,7 +18,7 @@ namespace Engine_lib.UI_Framework
             this.Position = pos;
             this.Content = content;
 
-            Initialize(device);
+            Initialize();
         }
 
         public override void Update()

@@ -51,9 +51,9 @@ namespace Engine_lib.UI_Framework
 
         public virtual void Update() { }
 
-		protected Texture2D set_color(GraphicsDevice device, int width, int height, Func<int, Color> paint)
+		protected virtual Texture2D create_background(int width, int height, Func<int, Color> paint)
         {
-            Texture2D texture = new Texture2D(device, width, height);
+            Texture2D texture = new Texture2D(Engine2D.graphics.GraphicsDevice, width, height);
             Color[] data = new Color[width * height];
 
             for (int pixel = 0; pixel < data.Count(); pixel++)

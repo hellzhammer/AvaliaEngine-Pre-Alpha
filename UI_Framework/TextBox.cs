@@ -10,7 +10,7 @@ namespace Engine_lib.UI_Framework
         private const int text_char_height = 18;
         private string display_string = string.Empty;
 
-        public TextBox(string name, string content, Vector2 pos, int width, int height, GraphicsDevice device)
+        public TextBox(string name, string content, Vector2 pos, int width, int height)
         {
 			this.contain_text = true;
 			this._height = height;
@@ -23,7 +23,7 @@ namespace Engine_lib.UI_Framework
             this.Position = pos;
             this.Content = content;
 
-            Initialize(device);
+            Initialize();
         }
 
         public override void Update()

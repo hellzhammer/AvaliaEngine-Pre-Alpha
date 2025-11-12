@@ -18,28 +18,27 @@ namespace Engine_lib.UI_Framework
         public Texture2D background { get; set; }
         public Color background_color = Color.Black;
         public Rectangle rect { get; protected set; }
-        protected Vector2 Origin { get; set; }
+        protected Vector2 Origin = new Vector2();
 
         /// <summary>
         /// Call after Your Code has been run.
         /// </summary>
-        public virtual void Initialize(GraphicsDevice device)
+        public virtual void Initialize()
         {
             this.is_mouse_over = false;
             SetHeight(this._height);
             SetWidth(this._width);
-            Set_Background(background_color, device);
+            BuildWidget(background_color);
             this.rect = new Rectangle(this.Position.ToPoint(), new Point((int)this._width, (int)this._height));
-            this.Origin = new Vector2(0, 0);
         }
 
-        public void Set_Background(Color color, GraphicsDevice device)
+        protected virtual void BuildWidget(Color color)
         {
             this.background_color = color;
-            this.background = this.set_color(device, (int)this._width, (int)this._height, pixel => background_color);
+            this.background = this.create_background((int)this._width, (int)this._height, pixel => background_color);
         }
 
-        protected void OnMouseOver(Vector2 mouse)
+        protected virtual void OnMouseOver(Vector2 mouse)
         {
             var mouse_rect = new Rectangle(mouse.ToPoint(), this.Origin.ToPoint());
             if (mouse_rect.Intersects(this.rect) && !this.is_mouse_over)
