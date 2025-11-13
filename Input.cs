@@ -108,36 +108,28 @@ public static class Input
 		return last_key_board_state.IsKeyDown(key) && key_board_state.IsKeyUp(key);
 	}
 
-	public static bool LeftMouseUp(MouseButton mouse)
+	public static bool LeftMouseUp()
 	{
-		bool rtn = false;
-		if (mouse == MouseButton.Left)
-		{
-			var last_left = last_mouse_state.LeftButton;
-			var curr_left = mouse_state.LeftButton;
-			if (last_left == ButtonState.Pressed && curr_left != ButtonState.Pressed)
-			{
-				rtn = true;
-			}
-		}
+        var last_left = last_mouse_state.LeftButton;
+        var curr_left = mouse_state.LeftButton;
+        if (last_left == ButtonState.Pressed && curr_left != ButtonState.Pressed)
+        {
+			return false;
+        }
 
-		return rtn;
+        return false;
 	}
 
-	public static bool RightMouseUp(MouseButton mouse)
+	public static bool RightMouseUp()
 	{
-		bool rtn = false;
-		if (mouse == MouseButton.Right)
-		{
-			var last_right = last_mouse_state.RightButton;
-			var curr_right = mouse_state.RightButton;
-			if (last_right == ButtonState.Pressed && curr_right != ButtonState.Pressed)
-			{
-				rtn = true;
-			}
-		}
+        var last_right = last_mouse_state.RightButton;
+        var curr_right = mouse_state.RightButton;
+        if (last_right == ButtonState.Pressed && curr_right != ButtonState.Pressed)
+        {
+            return true;
+        }
 
-		return rtn;
+        return false;
 	}
 
 	public static void _OnMouseOver(GameObject2D val)
@@ -175,14 +167,14 @@ public static class Input
 			}
 		}
 
-		if (obj_rect.Intersects(Mouse_Rect) && val.mouse_over && Input.LeftMouseDown(MouseButton.Left))
+		if (obj_rect.Intersects(Mouse_Rect) && val.mouse_over && Input.LeftMouseDown())
 		{
 			if (val.OnLeftClick != null)
 			{
 				val.OnLeftClick.Invoke();
 			}
 		}
-		else if (obj_rect.Intersects(Mouse_Rect) && val.mouse_over && Input.RightMouseDown(MouseButton.Right))
+		else if (obj_rect.Intersects(Mouse_Rect) && val.mouse_over && Input.RightMouseDown())
 		{
 			if (val.OnRightClick != null)
 			{
@@ -196,36 +188,28 @@ public static class Input
 		return !last_key_board_state.IsKeyDown(key) && key_board_state.IsKeyDown(key);
 	}
 
-	public static bool LeftMouseDown(MouseButton mouse)
+	public static bool LeftMouseDown()
 	{
-		bool rtn = false;
-		if (mouse == MouseButton.Left)
-		{
-			var last_left = last_mouse_state.LeftButton;
-			var curr_left = mouse_state.LeftButton;
-			if (last_left != ButtonState.Pressed && curr_left == ButtonState.Pressed)
-			{
-				rtn = true;
-			}
-		}
+        var last_left = last_mouse_state.LeftButton;
+        var curr_left = mouse_state.LeftButton;
+        if (last_left != ButtonState.Pressed && curr_left == ButtonState.Pressed)
+        {
+            return true;
+        }
 
-		return rtn;
+        return false;
 	}
 
-	public static bool RightMouseDown(MouseButton mouse)
+	public static bool RightMouseDown()
 	{
-		bool rtn = false;
-		if (mouse == MouseButton.Right)
-		{
-			var last_right = last_mouse_state.RightButton;
-			var curr_right = mouse_state.RightButton;
-			if (last_right != ButtonState.Pressed && curr_right == ButtonState.Pressed)
-			{
-				rtn = true;
-			}
-		}
+        var last_right = last_mouse_state.RightButton;
+        var curr_right = mouse_state.RightButton;
+        if (last_right != ButtonState.Pressed && curr_right == ButtonState.Pressed)
+        {
+			return true;
+        }
 
-		return rtn;
+        return false;
 	}
 
 	public static bool KeyHold(Keys key)
@@ -235,14 +219,13 @@ public static class Input
 
 	public static bool MouseHold(MouseButton mouse)
 	{
-		bool rtn = false;
 		if (mouse == MouseButton.Left)
 		{
 			var last_left = last_mouse_state.LeftButton;
 			var curr_left = mouse_state.LeftButton;
 			if (last_left == ButtonState.Pressed && curr_left == ButtonState.Pressed)
 			{
-				rtn = true;
+				return true;
 			}
 		}
 		else if (mouse == MouseButton.Right)
@@ -251,10 +234,10 @@ public static class Input
 			var curr_right = mouse_state.RightButton;
 			if (last_right == ButtonState.Pressed && curr_right == ButtonState.Pressed)
 			{
-				rtn = true;
+				return true;
 			}
 		}
 
-		return rtn;
+		return false;
 	}
 }

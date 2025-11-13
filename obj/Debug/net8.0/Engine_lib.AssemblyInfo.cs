@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Engine_lib is a modular UI and gameplay framework built on MonoGame, designed for" +
     " extensible 2D projects.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.1.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.1.0-beta+7a843c3daa3d19c3203a4f50c96bef5d06fe359e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.1.0-beta+0950f01016483c307cdf70a29329dff85cd30229")]
 [assembly: System.Reflection.AssemblyProductAttribute("Engine_lib")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Engine_lib")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.1.0.0")]

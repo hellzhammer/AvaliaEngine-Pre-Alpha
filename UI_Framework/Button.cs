@@ -31,7 +31,7 @@ namespace Engine_lib.UI_Framework
         {
             if (Click != null)
             {
-                if (this.is_mouse_over && Input.LeftMouseDown(MouseButton.Left) || this.is_mouse_over && Input.RightMouseDown(MouseButton.Right))
+                if (this.is_mouse_over && Input.LeftMouseDown() || this.is_mouse_over && Input.RightMouseDown())
                 {
                     this.Click.Invoke();
                 }

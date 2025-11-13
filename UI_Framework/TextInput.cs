@@ -87,13 +87,13 @@ namespace Engine_lib.UI_Framework
 
         private void HandleActivation()
         {
-            if (this.is_mouse_over && Input.LeftMouseDown(MouseButton.Left))
+            if (this.is_mouse_over && Input.LeftMouseDown())
             {
                 active_text_input = this;
                 if (this.OnActivated != null)
                     OnActivated.Invoke();
             }
-            else if (!this.is_mouse_over && Input.LeftMouseDown(MouseButton.Left))
+            else if (!this.is_mouse_over && Input.LeftMouseDown())
             {
                 if (active_text_input == this)
                 {
