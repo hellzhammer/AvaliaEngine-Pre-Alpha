@@ -2,7 +2,7 @@
 
 namespace Engine_lib.UI_Framework
 {
-    public class TextWidget : Widget
+    public abstract class TextWidget : Widget
     {
         public bool numeric_input = false;
 
