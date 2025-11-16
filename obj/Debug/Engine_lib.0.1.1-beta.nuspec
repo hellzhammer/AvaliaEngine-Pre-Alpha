@@ -10,7 +10,7 @@
     <description>Engine_lib is a modular UI and gameplay framework built on MonoGame, designed for extensible 2D projects.</description>
     <copyright>© 2025 Hooley Automation. All rights reserved.</copyright>
     <tags>monogame game-engine ui-framework csharp game-framework, hooley-automation</tags>
-    <repository type="git" url="https://github.com/hellzhammer/AvaliaEngine-Pre-Alpha" commit="fc6943d67d2250960446d7d47b4b40b98f720af1" />
+    <repository type="git" url="https://github.com/hellzhammer/AvaliaEngine-Pre-Alpha" commit="93e882ebc21a4973b5cec0615fc6fa886deb590f" />
     <dependencies>
       <group targetFramework="net8.0">
         <dependency id="MonoGame.Framework.DesktopGL" version="3.8.1.303" exclude="Build,Analyzers" />

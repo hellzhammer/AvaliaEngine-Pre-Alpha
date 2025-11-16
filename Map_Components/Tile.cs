@@ -57,7 +57,7 @@ namespace Engine_lib.Map_Components
         private void TrackMouseOver()
         {
             if (this.mouse_over)
-                WorldMap.MouseOverTile = this;
+                WorldMap.IsMouseOverTile = this;
         }
     }
 }

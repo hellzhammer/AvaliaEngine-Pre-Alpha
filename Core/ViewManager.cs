@@ -2,7 +2,6 @@
 using Engine_lib.UI_Framework.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 
 public class ViewManager : GameComponent
 {
@@ -31,7 +30,7 @@ public class ViewManager : GameComponent
 	{
 		var vMat = Camera2D.main_camera.GetViewMatrix();
 		if(view_stack != null && view_stack.Count > 0)
-			view_stack[0].Draw(batch, vMat);
+			view_stack[0].Draw(batch);
     }
 
     /// <summary>

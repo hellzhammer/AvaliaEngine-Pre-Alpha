@@ -5,10 +5,9 @@ namespace Engine_lib.Map_Components
 {
     public class WorldMap
     {
-        public static Tile MouseOverTile { get; set; }
+        public static Tile IsMouseOverTile { get; set; }
 
         public static Dictionary<string, Tile> TerrainTileDictionary { get; protected set; }
-        public static Dictionary<string, ResourceModel> ResourceTileDictionary { get; protected set; }
 
         public static MapChunk[][] World_Chunks { get; protected set; }
         public string MapName { get; protected set; }
@@ -25,8 +24,8 @@ namespace Engine_lib.Map_Components
             MapWidth = x;
             MapHeight = y;
 
-            ResourceTileDictionary = new Dictionary<string, ResourceModel>();
             TerrainTileDictionary = new Dictionary<string, Tile>();
+
 
             var world_id_map = BuildMap(100, 2488);
 
@@ -191,7 +190,7 @@ namespace Engine_lib.Map_Components
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public static Tile GetTileAround(Vector2 pos)
+        public static Tile GetTileAtPosition(Vector2 pos)
         {
             Tile rtn = null;
 

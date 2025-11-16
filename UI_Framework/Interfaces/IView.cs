@@ -10,7 +10,7 @@ namespace Engine_lib.UI_Framework.Interfaces
         Box background { get; set; }
 
         void Initialize(Vector2 pos, float height, float width);
-        void Draw(SpriteBatch sprite, Matrix view);
+        void Draw(SpriteBatch sprite);
         void Update(GameTime gt);
     }
 }

@@ -16,7 +16,7 @@ namespace Engine_lib.UI_Framework.Interfaces
 
         }
 
-        public virtual void Draw(SpriteBatch sprite, Matrix view)
+        public virtual void Draw(SpriteBatch sprite)
         {
             
         }

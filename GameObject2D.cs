@@ -19,6 +19,7 @@ namespace Engine_lib
                 Y = value.Y;
             }
         }
+
         public Rectangle Collision_Rect { get; protected set; }
         public Vector2 Origin { get; set; }
 

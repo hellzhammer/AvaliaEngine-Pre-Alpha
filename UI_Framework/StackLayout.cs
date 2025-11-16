@@ -30,8 +30,10 @@ namespace Engine_lib.UI_Framework
             base.Update();
         }
 
-        public override void Draw(bool simple_draw, SpriteBatch batch, Matrix viewport)
+        public override void Draw(bool simple_draw, SpriteBatch batch)
         {
+            var viewport = Camera2D.main_camera.GetViewMatrix();
+
             if (!simple_draw)
                 batch.Draw(background, Camera2D.ScreenToWorldSpace(Position, viewport), Color.White); // this works for menu, where below does not.
             else if (simple_draw)
@@ -41,7 +43,7 @@ namespace Engine_lib.UI_Framework
             {
                 foreach (var child in Children)
                 {
-                    child.Draw(simple_draw, batch, viewport);
+                    child.Draw(simple_draw, batch);
                 }
             }
         }

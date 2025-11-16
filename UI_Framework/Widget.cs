@@ -30,7 +30,7 @@ namespace Engine_lib.UI_Framework
             SetWidth(this._width);
             BuildWidgetBase(background_color);
             this.rect = new Rectangle(this.Position.ToPoint(), new Point((int)this._width, (int)this._height));
-            this.Origin = new Vector2(this.Width / 2, this.Height / 2);
+            this.Origin = new Vector2(); //new Vector2(this.Width / 2, this.Height / 2);
         }
 
         protected void BuildWidgetBase(Color color)
@@ -60,10 +60,12 @@ namespace Engine_lib.UI_Framework
             }
         }
 
-		public virtual void Draw(bool simple_draw, SpriteBatch batch, Matrix viewport)
+		public virtual void Draw(bool simple_draw, SpriteBatch batch)
         {
             if (this.background != null)
             {
+                var viewport = Camera2D.main_camera.GetViewMatrix();
+
                 if (!simple_draw)
                     batch.Draw(background, Camera2D.ScreenToWorldSpace(Position, viewport), Color.White); // this works for menu, where below does not.
                 else if (simple_draw)

@@ -85,11 +85,13 @@ namespace Engine_lib.UI_Framework
             }
         }
 
-        public override void Draw(bool simple_draw, SpriteBatch sprite, Matrix viewport)
+        public override void Draw(bool simple_draw, SpriteBatch sprite)
         {
-            base.Draw(simple_draw, sprite, viewport);
+            base.Draw(simple_draw, sprite);
             if (!string.IsNullOrWhiteSpace(Content))
             {
+                var viewport = Camera2D.main_camera.GetViewMatrix();
+
                 sprite.DrawString(
                     Engine2D.Game_Font,
                     display_string,

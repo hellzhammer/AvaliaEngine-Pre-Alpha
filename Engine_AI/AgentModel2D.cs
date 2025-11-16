@@ -125,11 +125,11 @@ namespace Engine_lib.Engine_AI
             Vector2 end = Movement_Order_Target;
 
             // Check if target is blocked
-            var targetTile = WorldMap.GetTileAround(end);
+            var targetTile = WorldMap.GetTileAtPosition(end);
             if (targetTile == null || targetTile.Is_Obstacle || IsAdjacentToObstacle(end))
                 return;
 
-            var ti = WorldMap.GetTileAround(this.Position);
+            var ti = WorldMap.GetTileAtPosition(this.Position);
             if (ti == null)
                 return;
 
@@ -180,7 +180,7 @@ namespace Engine_lib.Engine_AI
                 // Neighbors
                 foreach (var neighbor in GetNeighbors(current))
                 {
-                    var tile = WorldMap.GetTileAround(neighbor);
+                    var tile = WorldMap.GetTileAtPosition(neighbor);
                     if (tile == null || tile.Is_Obstacle || IsAdjacentToObstacle(neighbor))
                         continue;
 
@@ -231,7 +231,7 @@ namespace Engine_lib.Engine_AI
 
             foreach (var checkPos in checkPositions)
             {
-                var tile = WorldMap.GetTileAround(checkPos);
+                var tile = WorldMap.GetTileAtPosition(checkPos);
                 if (tile != null)
                 {
                     if (tile.Is_Obstacle)
