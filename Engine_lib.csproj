@@ -13,7 +13,7 @@
 
 		<!-- Package Metadata -->
 		<PackageId>Engine_lib</PackageId>
-		<Version>0.1.0-beta</Version>
+		<Version>0.1.1-beta</Version>
 		<Authors>Hellzhammer, Matt Perley</Authors>
 		<Company>Hooley Automation</Company>
 		<Product>Engine_lib</Product>
@@ -27,8 +27,8 @@
 
 		<!-- Assembly Info -->
 		<AssemblyTitle>Engine_lib</AssemblyTitle>
-		<AssemblyVersion>0.1.0.0</AssemblyVersion>
-		<FileVersion>0.1.0.0</FileVersion>
+		<AssemblyVersion>0.1.1.0</AssemblyVersion>
+		<FileVersion>0.1.1.0</FileVersion>
 
 		<!-- Optional build configuration -->
 		<RootNamespace>Engine_lib</RootNamespace>

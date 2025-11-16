@@ -1,3 +1,8 @@
+MUST CREATE A SPRITEFONT CALLED Game_Font, VIA THE CONTENT MANAGER (INSIDE CONTENT FOLDER).
+IF YOU DONT ATT THE GAME FONT THEN THE GAME WILL CRASH.
+
+GAME1 MUST INHERIT FROM ENGINE2D
+
 This library is a beta test of our 2D engine. This is one of the core libraries developed for building 2D games and applications. 
 Contains GUI components, rendering engine and input handling.
 

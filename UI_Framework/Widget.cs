@@ -28,11 +28,12 @@ namespace Engine_lib.UI_Framework
             this.is_mouse_over = false;
             SetHeight(this._height);
             SetWidth(this._width);
-            BuildWidget(background_color);
+            BuildWidgetBase(background_color);
             this.rect = new Rectangle(this.Position.ToPoint(), new Point((int)this._width, (int)this._height));
+            this.Origin = new Vector2(this.Width / 2, this.Height / 2);
         }
 
-        protected virtual void BuildWidget(Color color)
+        protected void BuildWidgetBase(Color color)
         {
             this.background_color = color;
             this.background = this.create_background((int)this._width, (int)this._height, pixel => background_color);

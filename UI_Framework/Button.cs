@@ -46,7 +46,7 @@ namespace Engine_lib.UI_Framework
 				batch.DrawString(
 					Engine2D.Game_Font,
 					Content,
-					Camera2D.ScreenToWorldSpace(new Vector2(Position.X + 5, Position.Y + 5), viewport),
+					Camera2D.ScreenToWorldSpace(new Vector2(Position.X + this.Width / 3 + 64, Position.Y + this.Height / 2), viewport),
 					font_color,
 					0,
 					Origin,
