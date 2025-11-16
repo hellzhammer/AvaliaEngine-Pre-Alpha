@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Engine_lib.Core;
 
 namespace Engine_lib.Map_Components
 {
@@ -28,7 +29,7 @@ namespace Engine_lib.Map_Components
 
             TerrainTileDictionary = new Dictionary<string, Tile>();
 
-            var world_id_map = BuildMap(offset_x, offset_y);
+            var world_id_map = BuildSampleMap(offset_x, offset_y);
 
             World_Chunks = SplitIntoChunks(world_id_map, 32, 32);
         }
@@ -42,19 +43,31 @@ namespace Engine_lib.Map_Components
 
             TerrainTileDictionary = new Dictionary<string, Tile>();
 
-            var world_id_map = BuildMap(offset_x, offset_y);
+            var world_id_map = BuildSampleMap(offset_x, offset_y);
 
             World_Chunks = SplitIntoChunks(world_id_map, 32, 32);
         }
 
         /// <summary>
-        /// builds the world using procedural generation, applying the settings provided by the player/developer
+        /// builds a demo map
         /// </summary>
-        protected string[][] BuildMap(int xoffset, int yoffset)
+        protected string[][] BuildSampleMap(int xoffset, int yoffset)
         {
+            if (!TextureManager.Texture_Dictionary.ContainsKey("base_map_texture"))
+            {
+                TextureManager.Texture_Dictionary.Add(
+                "base_map_texture",
+                Engine2D.CreateSquare(
+                    Engine2D.current.GraphicsDevice,
+                    32,
+                    32,
+                    (c) => Color.Green
+                ));
+            }
+
             string[][] world_id_map = new string[MapHeight][];
 
-            //var world = new Tile[MapHeight][];
+            // to do, change this. this just works, so not fixing now.
             var perlin_gen = new PerlinNoiseGenerator();
             var perlin_map = perlin_gen.GenerateNoiseMap(MapWidth, MapHeight, scale: 0.0095f, xoffset, yoffset, 10);
 
@@ -80,7 +93,7 @@ namespace Engine_lib.Map_Components
                 }
             }
 
-            return world_id_map; //world;
+            return world_id_map;
         }
 
         public virtual void Update(GameTime gt)
@@ -151,8 +164,8 @@ namespace Engine_lib.Map_Components
         public static Tile GetTileAtPosition(Vector2 pos)
         {
             Tile rtn = null;
-
             MapChunk ch = null;
+
             var pos_rect = new Rectangle(pos.ToPoint(), new Point(8, 8));
             for (int i = 0; i < World_Chunks.Length; i++)
             {
