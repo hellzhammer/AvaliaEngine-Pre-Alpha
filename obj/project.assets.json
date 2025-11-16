@@ -84,7 +84,7 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "0.1.1-beta",
+    "version": "0.1.1.2-beta",
     "restore": {
       "projectUniqueName": "C:\\Users\\mattp\\OneDrive\\Desktop\\GameConsoleProject\\GameFramework\\Engine_lib\\Engine_lib.csproj",
       "projectName": "Engine_lib",

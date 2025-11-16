@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "Engine_lib/0.1.1-beta": {
+      "Engine_lib/0.1.1.2-beta": {
         "dependencies": {
           "MonoGame.Framework.DesktopGL": "3.8.1.303"
         },
@@ -67,7 +67,7 @@
     }
   },
   "libraries": {
-    "Engine_lib/0.1.1-beta": {
+    "Engine_lib/0.1.1.2-beta": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

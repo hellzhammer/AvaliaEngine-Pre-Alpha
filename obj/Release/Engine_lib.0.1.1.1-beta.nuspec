@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Engine_lib</id>
+    <version>0.1.1.1-beta</version>
+    <authors>Hellzhammer, Matt Perley</authors>
+    <license type="expression">GPL-3.0-only</license>
+    <licenseUrl>https://licenses.nuget.org/GPL-3.0-only</licenseUrl>
+    <projectUrl>http://pixel-forge-engine.hooleyautomation.xyz/</projectUrl>
+    <description>Engine_lib is a modular UI and gameplay framework built on MonoGame, designed for extensible 2D projects.</description>
+    <copyright>© 2025 Hooley Automation. All rights reserved.</copyright>
+    <tags>monogame game-engine ui-framework csharp game-framework, hooley-automation</tags>
+    <repository type="git" url="https://github.com/hellzhammer/AvaliaEngine-Pre-Alpha" commit="49b99ba8d8ca03441d2f0280b611aba024e1cdef" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="MonoGame.Framework.DesktopGL" version="3.8.1.303" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\mattp\OneDrive\Desktop\GameConsoleProject\GameFramework\Engine_lib\bin\Release\net8.0\Engine_lib.dll" target="lib\net8.0\Engine_lib.dll" />
+  </files>
+</package>

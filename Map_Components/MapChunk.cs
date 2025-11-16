@@ -51,14 +51,14 @@ namespace Engine_lib.Map_Components
         /// <summary>
         /// check if a tile exists in this chunk.
         /// </summary>
-        public bool Contains(Vector2 tile)
+        public bool Contains(Vector2 coords)
         {
             bool found = false;
             for (int i = 0; i < ChunkIDMap.Length; i++)
             {
                 for (int j = 0; j < ChunkIDMap[0].Length; j++)
                 {
-                    if (WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position == tile)
+                    if (WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position == coords)
                     {
                         found = true;
                         break;
@@ -100,14 +100,14 @@ namespace Engine_lib.Map_Components
         /// <summary>
         /// returns a single tile based on a position from the game world.
         /// </summary>
-        public Tile GetTile(Vector2 tile)
+        public Tile GetTile(Vector2 coords)
         {
             Tile found = null;
             for (int i = 0; i < ChunkIDMap.Length; i++)
             {
                 for (int j = 0; j < ChunkIDMap[0].Length; j++)
                 {
-                    if (WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position == tile)
+                    if (WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]].Position == coords)
                     {
                         found = WorldMap.TerrainTileDictionary[ChunkIDMap[i][j]];
                         break;

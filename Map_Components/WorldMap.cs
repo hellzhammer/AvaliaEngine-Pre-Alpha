@@ -8,11 +8,13 @@ namespace Engine_lib.Map_Components
         public static Tile IsMouseOverTile { get; set; }
 
         public static Dictionary<string, Tile> TerrainTileDictionary { get; protected set; }
-
         public static MapChunk[][] World_Chunks { get; protected set; }
+
         public string MapName { get; protected set; }
         public int MapWidth { get; protected set; }
         public int MapHeight { get; protected set; }
+        public int offset_x = 1000;
+        public int offset_y = 1000;
 
         /// <summary>
         /// Ensure that 
@@ -26,8 +28,21 @@ namespace Engine_lib.Map_Components
 
             TerrainTileDictionary = new Dictionary<string, Tile>();
 
+            var world_id_map = BuildMap(offset_x, offset_y);
 
-            var world_id_map = BuildMap(100, 2488);
+            World_Chunks = SplitIntoChunks(world_id_map, 32, 32);
+        }
+
+        public WorldMap(int x, int y, int offx, int offy, string mapname = "default")
+        {
+            MapWidth = x;
+            MapHeight = y;
+            offset_x = offx;
+            offset_y = offy;
+
+            TerrainTileDictionary = new Dictionary<string, Tile>();
+
+            var world_id_map = BuildMap(offset_x, offset_y);
 
             World_Chunks = SplitIntoChunks(world_id_map, 32, 32);
         }
@@ -49,17 +64,14 @@ namespace Engine_lib.Map_Components
 
                 for (int j = 0; j < perlin_map[i].Length; j++)
                 {
-                    var t = NextTemperateTile(perlin_map[i][j], i, j);
+                    var t = new Tile($"base_tile-{i}-{j}", $"base_tile-{i}-{j}", "base_map_texture", new Vector2(j * 32, i * 32), false);
 
-                    if (t.tile != null)
+                    if (t != null)
                     {
                         // add tile data to the dictionary
-                        TerrainTileDictionary.Add(t.tile.object_name, t.tile);
+                        TerrainTileDictionary.Add(t.object_name, t);
                         // store tile id reference for later use.
-                        world_id_map[i][j] = t.tile.object_name;
-
-                        // once the perlin value is used we can simply overwrite in order to save compute/memory.
-                        perlin_map[i][j] = t.tile_weight; // set the weight for pathfinding.
+                        world_id_map[i][j] = t.object_name;
                     }
                     else
                     {
@@ -69,58 +81,6 @@ namespace Engine_lib.Map_Components
             }
 
             return world_id_map; //world;
-        }
-
-        protected (Tile tile, int tile_weight) NextTemperateTile(int val, int i, int j)
-        {
-            Tile t = null;
-            int tile_weight = 0; // can walk
-            // this section builds the starting regions for the various races of the world. races towns may only be spawned in these regions. 
-            // dungeons and POI's will be auto generated immediately for exploration and looting purposes.
-            // the sand does not generate resources at this time. that could change?
-            if (val == 0)
-            {
-                t = new Tile("Grass", 3, "Tile-" + j + "-" + i, "Grass", new Vector2(j * 32, i * 32), false);
-            }
-            else if (val == 1)
-            {
-                t = new Tile("Sand", 1, "Tile-" + j + "-" + i, "Sand", new Vector2(j * 32, i * 32), false);
-            }
-
-            // seperate the rest of world with water. -- no resources spawn in these areas.
-            else if (val == 2)
-            {
-                t = new Tile("Water", 0, "Tile-" + j + "-" + i, "Water", new Vector2(j * 32, i * 32), true);
-                tile_weight = 1; // cannot walk;
-            }
-
-            // build the main landscape. - the regions the various races tribes will eventually expand into.
-            // no towns or dungeons will be auto spawned. they are going to be generated as the game progresses. 
-            // this is the main terrain. simple grassy fields with scattered resources.
-            else if (val == 3 || val == 4 || val == 5)
-            {
-                t = new Tile("Sand", 1, "Tile-" + j + "-" + i, "Sand", new Vector2(j * 32, i * 32), false);
-            }
-
-            // create the denser forested areas. these areas will have more wood and food, but be harder to traverse and more dangerous.
-            // these areas are less travelled by any cerature. staying rich and reserved for generations.
-            else if (val == 6 || val == 7 || val == 8)
-            {
-                t = new Tile("Grass", 3, "Tile-" + j + "-" + i, "Grass", new Vector2(j * 32, i * 32), false);
-            }
-            else if (val == 9)
-            {
-                t = new Tile("Mud", 2, "Tile-" + j + "-" + i, "Mud", new Vector2(j * 32, i * 32), false);
-            }
-
-            // then create the mountainous regions. whenever there is a number unassociated with the biome -- work around for complex code lol.
-            else
-            {
-                t = new Tile("Mountain", 4, "Tile-" + j + "-" + i, "Mountain", new Vector2(j * 32, i * 32), true);
-                tile_weight = 1; // cannot walk;
-            }
-
-            return (tile: t, tile_weight: tile_weight);
         }
 
         public virtual void Update(GameTime gt)
@@ -188,8 +148,6 @@ namespace Engine_lib.Map_Components
         /// 
         /// returns null if no tile found.
         /// </summary>
-        /// <param name="pos"></param>
-        /// <returns></returns>
         public static Tile GetTileAtPosition(Vector2 pos)
         {
             Tile rtn = null;
